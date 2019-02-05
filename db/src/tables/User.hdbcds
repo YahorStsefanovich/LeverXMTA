@@ -1,0 +1,11 @@
+namespace HiMTA;
+
+using HiMTA::ExtraInfo.Address;
+using HiMTA::ExtraInfo.Cars;
+ 
+entity User {
+    @Comment: 'Id of User'
+    key usid : String(4);
+    @Comment: 'Description'
+    name : String(100);
+}; 
