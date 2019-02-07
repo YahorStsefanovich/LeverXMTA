@@ -33,18 +33,18 @@ var lib = class PreparedStatement {
         //generate query
         let oResult = new oResultConstructor();
 
-        if (oValueObject === undefined){
-            oResult.sql += `SELECT *`;
+        if (!oValueObject){
+            oResult.sql += 'SELECT * ';
         } else {
             oResult.sql += "SELECT ";
-            for (let key in oValueObject.keys){
-                oResult.aParams.push(key);
-                oResult.sql += `${key}, `;
-            }
+            oValueObject.keys.forEach((elem)=>{
+                oResult.aParams.push(elem);
+                oResult.sql += `${elem}, `;
+            });
             oResult.sql.slice(-2);
         }
 
-        oResult.sql += ` FROM ${sTableName}`;
+        oResult.sql += ` FROM "${sTableName}"`;
 
         return oResult;
     }

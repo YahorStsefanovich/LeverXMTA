@@ -10,8 +10,8 @@ var user = function (connection, prefix, tableName) {
                 $.session.getUsername().toLocaleLowerCase(),
     */
 
-    this.doGet = function (obj) {
-        const statement = PreparedStatementLib.createPreparedSelectStatement(USER_TABLE, obj);
+    this.doGet = function (oUser) {
+        const statement = PreparedStatementLib.createPreparedSelectStatement(USER_TABLE, oUser);
         const result = connection.executeQuery(statement.sql);
 
         $.response.status = $.net.http.OK;
@@ -27,10 +27,11 @@ var user = function (connection, prefix, tableName) {
 
         //generate query
         const statement = PreparedStatementLib.createPreparedInsertStatement(USER_TABLE, oUser);
+
         //execute update
         connection.executeUpdate(statement.sql, statement.aValues);
-
         connection.commit();
+
         $.response.status = $.net.http.CREATED;
         $.response.setBody(JSON.stringify(oUser));
     };
@@ -50,8 +51,8 @@ var user = function (connection, prefix, tableName) {
 
         //execute update
         connection.executeUpdate(oResult.sql, oResult.aValues);
-
         connection.commit();
+
         $.response.status = $.net.http.OK;
         $.response.setBody(JSON.stringify(oUser));
     };
