@@ -1,4 +1,4 @@
-class PrepearedStatement {
+var lib = class PreparedStatement {
     static createPreparedInsertStatement(sTableName, oValueObject) {
         let oResult = {
             aParams: [],
@@ -40,7 +40,7 @@ class PrepearedStatement {
         };
 
         if (oValueObject === undefined){
-            oResult.sql += `SELECT * FROM ${sTableName}`;
+            oResult.sql += `SELECT *`;
         } else {
             oResult.sql += "SELECT ";
             for (let key in oValueObject.keys){
@@ -70,6 +70,4 @@ class PrepearedStatement {
         $.trace.error("sql to delete: " + oResult.sql);
         return oResult;
     }
-}
-
-module.exports = PrepearedStatement;
+};

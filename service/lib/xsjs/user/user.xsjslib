@@ -1,76 +1,4 @@
-class PrepearedStatement {
-    static createPreparedInsertStatement(sTableName, oValueObject) {
-        let oResult = {
-            aParams: [],
-            aValues: [],
-            sql: "",
-        };
-
-        let sColumnList = '', sValueList = '';
-
-        Object.keys(oValueObject).forEach(value => {
-            sColumnList += `"${value}",`;
-            oResult.aParams.push(value);
-        });
-
-        Object.values(oValueObject).forEach(value => {
-            sValueList += "?, ";
-            oResult.aValues.push(value);
-        });
-
-        $.trace.error("svalue " + sValueList);
-        $.trace.error("scolumn: " + sColumnList);
-
-        // Remove the last unnecessary comma and blank
-        sColumnList = sColumnList.slice(0, -1);
-        sValueList = sValueList.slice(0, -2);
-
-        oResult.sql = `insert into "${sTableName}" (${sColumnList}) values (${sValueList})`;
-
-        $.trace.error("sql to insert: " + oResult.sql);
-        return oResult;
-    }
-
-    static createPreparedSelectStatement(sTableName, oValueObject) {
-        //generate query
-        let oResult = {
-            aParams: [],
-            aValues: [],
-            sql: "",
-        };
-
-        if (oValueObject === undefined){
-            oResult.sql += `SELECT *`;
-        } else {
-            oResult.sql += "SELECT ";
-            for (let key in oValueObject.keys){
-                oResult.aParams.push(key);
-                oResult.sql += `${key}, `;
-            }
-            oResult.sql.slice(-2);
-        }
-
-        oResult.sql += ` FROM ${sTableName}`;
-
-        return oResult;
-    }
-
-    /**
-     * delete by id
-     * **/
-    static createPreparedDeleteStatement(sTableName, oConditionObject) {
-        let oResult = {
-            aParams: [],
-            aValues: [],
-            sql: "",
-        };
-
-        oResult.sql = `DELETE FROM "${sTableName}" WHERE "usid"=${oConditionObject.usid}`;
-
-        $.trace.error("sql to delete: " + oResult.sql);
-        return oResult;
-    }
-}
+var PreparedStatementLib = $.import('xsjs', 'preparedStatement').lib;
 
 var user = function (connection, prefix, tableName) {
 
@@ -83,7 +11,7 @@ var user = function (connection, prefix, tableName) {
     */
 
     this.doGet = function (obj) {
-        const statement = PrepearedStatement.createPreparedSelectStatement(USER_TABLE, obj);
+        const statement = PreparedStatementLib.createPreparedSelectStatement(USER_TABLE, obj);
         const result = connection.executeQuery(statement.sql);
 
         $.response.status = $.net.http.OK;
@@ -98,7 +26,7 @@ var user = function (connection, prefix, tableName) {
         oUser.usid = getNextval(`${PREFIX}usid`);
 
         //generate query
-        const statement = PrepearedStatement.createPreparedInsertStatement(USER_TABLE, oUser);
+        const statement = PreparedStatementLib.createPreparedInsertStatement(USER_TABLE, oUser);
         //execute update
         connection.executeUpdate(statement.sql, statement.aValues);
 
@@ -129,7 +57,7 @@ var user = function (connection, prefix, tableName) {
     };
 
     this.doDelete = function (oUser) {
-        const statement = PrepearedStatement.createPreparedDeleteStatement(USER_TABLE, oUser);
+        const statement = PreparedStatementLib.createPreparedDeleteStatement(USER_TABLE, oUser);
         connection.executeUpdate(statement.sql, statement.aValues);
 
         connection.commit();

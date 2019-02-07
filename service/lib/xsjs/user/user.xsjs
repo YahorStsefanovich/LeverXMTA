@@ -1,8 +1,12 @@
 const Userlib = $.import('xsjs.user', 'user').user;
+
+const PREFIX = "HiMTA::";
+const TABLE_NAME = "User";
+
 const userLib = new Userlib(
     $.hdb.getConnection({ treatDateAsUTC: true}),
-    "HiMTA::",
-    "User"
+    PREFIX,
+    TABLE_NAME
 );
 
 (function () {
@@ -10,7 +14,7 @@ const userLib = new Userlib(
         try {
             switch ($.request.method) {
                 case $.net.http.GET: {
-                    let body = $.request.body !== undefined? JSON.parse($.request.body.asString()) : undefined ;
+                    let body = (!$.request.body? JSON.parse($.request.body.asString()) : undefined );
                     userLib.doGet(body);
                     break;
                 }
@@ -27,8 +31,7 @@ const userLib = new Userlib(
                     break;
                 }
                 default: {
-                    let body = $.request.body !== undefined? JSON.parse($.request.body.asString()) : undefined ;
-                    userLib.doGet(body);
+                    $.response.status = $.net.http.METHOD_NOT_ALLOWED;
                     break;
                 }
             }
