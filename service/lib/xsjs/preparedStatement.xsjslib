@@ -1,10 +1,8 @@
+var oResultConstructor = $.import('xsjs', 'oResult').lib;
+
 var lib = class PreparedStatement {
     static createPreparedInsertStatement(sTableName, oValueObject) {
-        let oResult = {
-            aParams: [],
-            aValues: [],
-            sql: "",
-        };
+        let oResult = new oResultConstructor();
 
         let sColumnList = '', sValueList = '';
 
@@ -33,11 +31,7 @@ var lib = class PreparedStatement {
 
     static createPreparedSelectStatement(sTableName, oValueObject) {
         //generate query
-        let oResult = {
-            aParams: [],
-            aValues: [],
-            sql: "",
-        };
+        let oResult = new oResultConstructor();
 
         if (oValueObject === undefined){
             oResult.sql += `SELECT *`;
@@ -55,19 +49,24 @@ var lib = class PreparedStatement {
         return oResult;
     }
 
-    /**
-     * delete by id
-     * **/
     static createPreparedDeleteStatement(sTableName, oConditionObject) {
-        let oResult = {
-            aParams: [],
-            aValues: [],
-            sql: "",
-        };
+        let oResult = new oResultConstructor();
 
-        oResult.sql = `DELETE FROM "${sTableName}" WHERE "usid"=${oConditionObject.usid}`;
+        let sWhereClause = '';
+        for (let key in oConditionObject) {
+            sWhereClause += ` "${key}"=? and `;
+            oResult.aValues.push(oConditionObject[key]);
+            oResult.aParams.push(key);
+        }
+        // Remove the last unnecessary AND
+        sWhereClause = sWhereClause.slice(0, -5);
+        if (sWhereClause.length > 0) {
+            sWhereClause = " where " + sWhereClause;
+        }
+
+        oResult.sql = `delete from "${sTableName}" ${sWhereClause}`;
 
         $.trace.error("sql to delete: " + oResult.sql);
         return oResult;
-    }
+    };
 };

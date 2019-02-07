@@ -14,7 +14,7 @@ const userLib = new Userlib(
         try {
             switch ($.request.method) {
                 case $.net.http.GET: {
-                    let body = (!$.request.body? JSON.parse($.request.body.asString()) : undefined );
+                    let body = ($.request.body? JSON.parse($.request.body.asString()) : undefined );
                     userLib.doGet(body);
                     break;
                 }
@@ -27,7 +27,7 @@ const userLib = new Userlib(
                     break;
                 }
                 case $.net.http.DEL : {
-                    userLib.doDelete(JSON.parse($.request.body.asString()));
+                    userLib.doDelete($.request.parameters.get("usid"));
                     break;
                 }
                 default: {

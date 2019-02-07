@@ -56,8 +56,8 @@ var user = function (connection, prefix, tableName) {
         $.response.setBody(JSON.stringify(oUser));
     };
 
-    this.doDelete = function (oUser) {
-        const statement = PreparedStatementLib.createPreparedDeleteStatement(USER_TABLE, oUser);
+    this.doDelete = function (usid) {
+        const statement = PreparedStatementLib.createPreparedDeleteStatement(USER_TABLE, {usid: usid});
         connection.executeUpdate(statement.sql, statement.aValues);
 
         connection.commit();
