@@ -3,7 +3,6 @@ _schema-version: '2.1'
 version: 0.0.1
 parameters:
   deploy_mode: html5-repo
-
 modules:
 -
   name: router
@@ -47,11 +46,13 @@ modules:
   type: nodejs
   path: service
   requires:
+  - {name: pt_uaa}
   - {name: pt_db}
   - {name: pt_hdi}
   provides:
   - {name: pt_service, properties: {url: '${default-url}'}}
   parameters:
+    register-service-url: true
     memory: 512M
     disk_quota: 512M
 -
