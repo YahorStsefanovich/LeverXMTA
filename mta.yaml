@@ -76,6 +76,19 @@ modules:
   parameters:
     disk-quota: 256M
     memory: 128M
+#-
+#  name: flp
+#  type: com.sap.portal.site-content
+#  path: flp
+#  parameters:
+#    stack: cflinuxfs3
+#    memory: 128M
+#    buildpack: 'https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.6.39/nodejs-buildpack-cflinuxfs3-v1.6.39.zip'
+#  requires:
+#  - name: portal_resources_HiMTA
+#  - name: uaa_HiMTA
+#  - name: pt_deployer
+#  - name: deployer
 resources:
 -
   name: pt_uaa
