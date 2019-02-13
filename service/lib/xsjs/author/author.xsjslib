@@ -1,43 +1,44 @@
 var PreparedStatementLib = $.import('xsjs', 'preparedStatement').lib;
 
-var user = function (connection, prefix, tableName) {
+var Author = function (connection, prefix, tableName) {
 
-    const PREFIX = prefix;
-    const USER_TABLE = prefix + tableName;
+    const sPREFIX = prefix;
+    const sTABLE_NAME = prefix + tableName;
     /*
             const USER = $.session.securityContext.userInfo.familyName ?
                 $.session.securityContext.userInfo.familyName + " " + $.session.securityContext.userInfo.givenName :
                 $.session.getUsername().toLocaleLowerCase(),
     */
 
-    this.doGet = function (oUser) {
-        const statement = PreparedStatementLib.createPreparedSelectStatement(USER_TABLE, oUser);
+    //OK
+    this.doGet = function (oAuthor) {
+        const statement = PreparedStatementLib.createPreparedSelectStatement(sTABLE_NAME, oAuthor);
         const result = connection.executeQuery(statement.sql);
 
         $.response.status = $.net.http.OK;
         $.response.setBody(JSON.stringify(result));
     };
 
+    //OK
+    this.doPost = function (oAuthor) {
 
-    this.doPost = function (oUser) {
-
-        $.trace.error("oUser:   " + JSON.stringify(oUser));
+        $.trace.error("oAuthor:   " + JSON.stringify(oAuthor));
         //Get Next ID Number
-        oUser.usid = getNextval(`${PREFIX}usid`);
+        oAuthor.author_id = getNextval(`${sPREFIX}author_id`);
 
         //generate query
-        const statement = PreparedStatementLib.createPreparedInsertStatement(USER_TABLE, oUser);
+        const statement = PreparedStatementLib.createPreparedInsertStatement(sTABLE_NAME, oAuthor);
 
         //execute update
         connection.executeUpdate(statement.sql, statement.aValues);
         connection.commit();
 
         $.response.status = $.net.http.CREATED;
-        $.response.setBody(JSON.stringify(oUser));
+        $.response.setBody(JSON.stringify(oAuthor));
     };
 
-
-    this.doPut = function (oUser) {
+    //OK
+    this.doPut = function (oAuthor) {
         //generate query
         let oResult = {
             aParams: [],
@@ -45,7 +46,7 @@ var user = function (connection, prefix, tableName) {
             sql: "",
         };
 
-        oResult.sql = `UPDATE "${USER_TABLE}" SET "name"='${oUser.name}' WHERE "usid"=${oUser.usid};`;
+        oResult.sql = `UPDATE "${sTABLE_NAME}" SET "name"='${oAuthor.name}' WHERE "author_id"=${oAuthor.author_id};`;
 
         $.trace.error("sql to update: " + oResult.sql);
 
@@ -54,11 +55,12 @@ var user = function (connection, prefix, tableName) {
         connection.commit();
 
         $.response.status = $.net.http.OK;
-        $.response.setBody(JSON.stringify(oUser));
+        $.response.setBody(JSON.stringify(oAuthor));
     };
 
-    this.doDelete = function (usid) {
-        const statement = PreparedStatementLib.createPreparedDeleteStatement(USER_TABLE, {usid: usid});
+    //OK
+    this.doDelete = function (author_id) {
+        const statement = PreparedStatementLib.createPreparedDeleteStatement(sTABLE_NAME, {author_id: author_id});
         connection.executeUpdate(statement.sql, statement.aValues);
 
         connection.commit();
@@ -66,13 +68,14 @@ var user = function (connection, prefix, tableName) {
         $.response.setBody(JSON.stringify({}));
     };
 
+    //OK
     function getNextval(sSeqName) {
         const statement = `select "${sSeqName}".NEXTVAL as "ID" from dummy`;
 
         const result = connection.executeQuery(statement);
 
         if (result.length > 0) {
-            $.trace.error("ID: "+result[0].ID);
+            $.trace.error("ID: " + result[0].ID);
             return result[0].ID;
         } else {
             throw new Error('ID was not generated');

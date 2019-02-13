@@ -1,9 +1,9 @@
-const Userlib = $.import('xsjs.user', 'user').user;
+const Author = $.import('xsjs.author', 'author').Author;
 
 const PREFIX = "HiMTA::";
-const TABLE_NAME = "User";
+const TABLE_NAME = "Author";
 
-const userLib = new Userlib(
+const authors = new Author(
     $.hdb.getConnection({ treatDateAsUTC: true}),
     PREFIX,
     TABLE_NAME
@@ -15,19 +15,19 @@ const userLib = new Userlib(
             switch ($.request.method) {
                 case $.net.http.GET: {
                     let body = ($.request.body? JSON.parse($.request.body.asString()) : undefined );
-                    userLib.doGet(body);
+                    authors.doGet(body);
                     break;
                 }
                 case $.net.http.PUT : {
-                    userLib.doPut(JSON.parse($.request.body.asString()));
+                    authors.doPut(JSON.parse($.request.body.asString()));
                     break;
                 }
                 case $.net.http.POST : {
-                    userLib.doPost(JSON.parse($.request.body.asString()));
+                    authors.doPost(JSON.parse($.request.body.asString()));
                     break;
                 }
                 case $.net.http.DEL : {
-                    userLib.doDelete($.request.parameters.get("usid"));
+                    authors.doDelete($.request.parameters.get("author_id"));
                     break;
                 }
                 default: {

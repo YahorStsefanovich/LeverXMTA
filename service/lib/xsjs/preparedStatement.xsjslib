@@ -6,14 +6,12 @@ var lib = class PreparedStatement {
 
         let sColumnList = '', sValueList = '';
 
-        Object.keys(oValueObject).forEach(value => {
-            sColumnList += `"${value}",`;
-            oResult.aParams.push(value);
-        });
+        Object.keys(oValueObject).forEach(key => {
+            sColumnList += `"${key}",`;
+            oResult.aParams.push(key);
 
-        Object.values(oValueObject).forEach(value => {
             sValueList += "?, ";
-            oResult.aValues.push(value);
+            oResult.aValues.push(oValueObject[key]);
         });
 
         $.trace.error("svalue " + sValueList);

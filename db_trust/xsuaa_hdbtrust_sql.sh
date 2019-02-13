@@ -22,8 +22,8 @@ function show_options
     echo " -i:      SQL template in [default: xsuaa_template.sql]"
     echo " -q:      SQL file created [default: xs_appuser.sql]"
     echo " -n:      HANA host name:port [default: EMPTY, no hdbsql used]"
-    echo " -u:      HANA system user name [default: system]"
-    echo " -p:      HANA system user password"
+    echo " -u:      HANA system author name [default: system]"
+    echo " -p:      HANA system author password"
 }
 # show help
 function show_help
