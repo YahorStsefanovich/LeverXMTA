@@ -1,6 +1,8 @@
 var JsonFormatter = $.import('xsjs', 'JsonFormatter').formatter;
 
+
 const sTABLE_NAME = "HiMTA::Author";
+const sAUTHOR_ID = "HiMTA::author_id";
 
 //OK
 function authorsCreate(param){
@@ -16,7 +18,7 @@ function authorsCreate(param){
     $.trace.error(JSON.stringify(oAuthor));
 
     //Get Next Personnel Number
-    pStmt = param.connection.prepareStatement(`select "${sTABLE_NAME}".NEXTVAL from dummy`);
+    pStmt = param.connection.prepareStatement(`select "${sAUTHOR_ID}".NEXTVAL from dummy`);
     var result = pStmt.executeQuery();
 
     while (result.next()) {

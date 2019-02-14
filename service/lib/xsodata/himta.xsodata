@@ -11,7 +11,7 @@ service namespace "HiMTA"{
             update forbidden
             delete forbidden;
 
-    "HiMTA::ExtraInfo.Books" as "Books"
+    "HiMTA::ExtraInfo.Book" as "Books"
                 navigates("Books_2_Author" as "toAuthor")
             create forbidden
             update forbidden
