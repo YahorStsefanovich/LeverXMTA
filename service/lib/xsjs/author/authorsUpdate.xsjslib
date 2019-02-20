@@ -13,6 +13,6 @@ function authorsUpdate(param) {
     $.trace.error(JSON.stringify(oAuthor));
 
     var uStmt;
-    uStmt = param.connection.prepareStatement(`UPDATE "${sTABLE_NAME}" SET "name"='${oAuthor.name}' WHERE "author_id"=${oAuthor.author_id};`);
+    uStmt = param.connection.prepareStatement(`UPDATE "${sTABLE_NAME}" SET "name"='${oAuthor.name}' WHERE "author_id"='${oAuthor.author_id}';`);
     uStmt.executeUpdate();
 }

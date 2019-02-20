@@ -12,13 +12,58 @@
             "name": "Component.js"
         },
         {
+            "name": "controller\\Detail-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller\\Detail.controller.js"
+        },
+        {
+            "name": "controller\\Main-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller\\Main.controller.js"
+        },
+        {
+            "name": "css\\style-dbg.css",
+            "isDebug": true
+        },
+        {
+            "name": "css\\style.css"
+        },
+        {
             "name": "di.code-validation.core_issues.json"
+        },
+        {
+            "name": "fragment\\Person.fragment.xml"
+        },
+        {
+            "name": "i18n\\i18n.properties",
+            "raw": "i18n\\i18n.properties"
+        },
+        {
+            "name": "i18n\\i18n_ru.properties",
+            "raw": "i18n\\i18n.properties",
+            "locale": "_ru"
+        },
+        {
+            "name": "i18n\\i18n_ru_Ru.properties",
+            "raw": "i18n\\i18n.properties",
+            "locale": "_ru_Ru"
         },
         {
             "name": "index.html"
         },
         {
             "name": "manifest.json"
+        },
+        {
+            "name": "model\\models-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "model\\models.js"
         },
         {
             "name": "tmp\\Component-preload.js",
@@ -28,13 +73,72 @@
             "name": "tmp\\Component.js"
         },
         {
+            "name": "tmp\\controller\\Detail.controller.js"
+        },
+        {
+            "name": "tmp\\controller\\Main.controller.js"
+        },
+        {
+            "name": "tmp\\css\\style.css"
+        },
+        {
+            "name": "tmp\\fragment\\Person.fragment.xml"
+        },
+        {
+            "name": "tmp\\i18n\\i18n.properties",
+            "raw": "i18n\\i18n.properties"
+        },
+        {
+            "name": "tmp\\i18n\\i18n_ru.properties",
+            "raw": "i18n\\i18n.properties",
+            "locale": "_ru"
+        },
+        {
+            "name": "tmp\\i18n\\i18n_ru_Ru.properties",
+            "raw": "i18n\\i18n.properties",
+            "locale": "_ru_Ru"
+        },
+        {
             "name": "tmp\\index.html"
         },
         {
             "name": "tmp\\manifest.json"
         },
         {
+            "name": "tmp\\model\\models.js"
+        },
+        {
+            "name": "tmp\\view\\Detail.view.xml"
+        },
+        {
+            "name": "tmp\\view\\Main.view.xml"
+        },
+        {
+            "name": "tmp\\view\\Overview.view.xml"
+        },
+        {
             "name": "tmp-dbg\\Component.js"
+        },
+        {
+            "name": "tmp-dbg\\controller\\Detail.controller.js"
+        },
+        {
+            "name": "tmp-dbg\\controller\\Main.controller.js"
+        },
+        {
+            "name": "tmp-dbg\\css\\style.css"
+        },
+        {
+            "name": "tmp-dbg\\model\\models.js"
+        },
+        {
+            "name": "view\\Detail.view.xml"
+        },
+        {
+            "name": "view\\Main.view.xml"
+        },
+        {
+            "name": "view\\Overview.view.xml"
         },
         {
             "name": "xs-app.json"
