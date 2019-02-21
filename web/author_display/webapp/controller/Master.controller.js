@@ -3,23 +3,22 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
-	'sap/ui/model/Sorter',
-	'sap/m/MessageBox'
-], function (JSONModel, Controller, Filter, FilterOperator, Sorter, MessageBox) {
+	'sap/ui/model/Sorter'
+], function (JSONModel, Controller, Filter, FilterOperator, Sorter) {
 	"use strict";
 
 	return Controller.extend("author_display.controller.Master", {
-		onInit: function () {
+
+	    onInit: function () {
 			this.oRouter = this.getOwnerComponent().getRouter();
 			this._bDescendingSort = false;
-		},
+        },
+
+        //works
 		onListItemPress: function (oEvent) {
 			var oNextUIState = this.getOwnerComponent().getHelper().getNextUIState(1),
 				authorPath = oEvent.getSource().getBindingContext("authors").getPath(),
 				author = authorPath.split("/").slice(-1).pop();
-			// var author_id = author.substr(-7).slice(-1);
-
-			// this.oRouter.navTo("detail", {layout: oNextUIState.layout, author: author, author_id: author_id});
 			this.oRouter.navTo("detail", {layout: oNextUIState.layout, author: author});
 		},
 		
@@ -37,11 +36,11 @@ sap.ui.define([
 
 		
 		onAdd: function (oEvent) {
-			MessageBox.show("This functionality is not ready yet.", {
-				icon: MessageBox.Icon.INFORMATION,
-				title: "Aw, Snap!",
-				actions: [MessageBox.Action.OK]
-			});
+			// MessageBox.show("This functionality is not ready yet.", {
+			// 	icon: MessageBox.Icon.INFORMATION,
+			// 	title: "Aw, Snap!",
+			// 	actions: [MessageBox.Action.OK]
+			// });
 		},
 
 		//works
@@ -53,6 +52,23 @@ sap.ui.define([
 				oSorter = new Sorter("name", this._bDescendingSort);
 
 			oBinding.sort(oSorter);
-		}
+		},
+
+        onUpdateFinished: function (oEvent) {
+            // update the worklist's object counter after the table update
+            var sTitle,
+                oTable = oEvent.getSource(),
+                iTotalItems = oEvent.getParameter("total");
+            // only update the counter if the length is final and
+            // the table is not empty
+            if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                sTitle = `Authors(${iTotalItems})`;
+            } else {
+                sTitle = "Authors";
+            }
+            this.getView().byId("authorsTableTitle").setText(sTitle);
+        },
+
+
 	});
 }, true);

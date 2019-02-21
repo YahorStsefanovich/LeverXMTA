@@ -8,7 +8,9 @@
 		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
-					<Title id="authorsTableTitle" text="Authors and their books"/>
+					<Title
+                            id="authorsTableTitle"
+                    />
 				</f:heading>
 			</f:DynamicPageTitle>
 		</f:title>
@@ -21,7 +23,8 @@
 						path: 'authors>/Authors'
 					}"
 				   class="sapFDynamicPageAlignContent"
-				   width="auto">
+				   width="auto"
+                   updateFinished=".onUpdateFinished">
 				<headerToolbar>
 					<OverflowToolbar>
 						<ToolbarSpacer/>
