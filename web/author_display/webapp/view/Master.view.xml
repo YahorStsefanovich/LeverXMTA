@@ -8,7 +8,7 @@
 		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
-					<Title text="Authors and their books ({authors>/Authors/length})"/>
+					<Title id="authorsTableTitle" text="Authors and their books"/>
 				</f:heading>
 			</f:DynamicPageTitle>
 		</f:title>
@@ -32,21 +32,41 @@
 				</headerToolbar>
 				<columns>
 					<Column width="12em">
-						<Text text="Product" />
+						<Text text="Author name" />
 					</Column>
-					<Column	hAlign="End">
-						<Text text="Price" />
+					<Column	hAlign="Center">
+						<Text text="Created" />
+					</Column>
+					<Column	hAlign="Center">
+						<Text text="Last modified" />
 					</Column>
 				</columns>
 				<items>
 					<ColumnListItem type="Navigation" press="onListItemPress">
 						<cells>
 							<ObjectIdentifier title="{authors>name}" text="{authors>author_id}" />
-							<ObjectNumber
-									number="{
-										parts:[{path:'authors>name'},{path:'authors>author_id'}]
-									}"
-									unit="{authors>name}" />
+							<ObjectIdentifier
+									text="{
+											 path: 'authors>created',
+											 type: 'sap.ui.model.type.DateTime',
+											 formatOptions: {
+												pattern: 'HH:mm:ss, dd.MM.yyyy',
+												strictParsing: true ,
+												UTC: true
+											 }
+										  }"
+							/>
+							<ObjectIdentifier
+									text="{
+											 path: 'authors>updated',
+											 type: 'sap.ui.model.type.DateTime',
+											 formatOptions: {
+												pattern: 'HH:mm:ss, dd.MM.yyyy',
+												strictParsing: true ,
+												UTC: true
+											 }
+										  }"
+							/>
 						</cells>
 					</ColumnListItem>
 				</items>
