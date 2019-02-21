@@ -36,7 +36,10 @@ sap.ui.define([
 			this._author = oEvent.getParameter("arguments").author || this._author || "0";
 			this.getView().bindElement({
 				path: "/" + this._author,
-				model: "authors"
+				model: "authors",
+				parameters: {
+					expand: "toBooks,toAddress"
+				},
 			});
 		}
 	});

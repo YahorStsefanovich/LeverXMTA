@@ -17,7 +17,9 @@ sap.ui.define([
 			var oNextUIState = this.getOwnerComponent().getHelper().getNextUIState(1),
 				authorPath = oEvent.getSource().getBindingContext("authors").getPath(),
 				author = authorPath.split("/").slice(-1).pop();
+			// var author_id = author.substr(-7).slice(-1);
 
+			// this.oRouter.navTo("detail", {layout: oNextUIState.layout, author: author, author_id: author_id});
 			this.oRouter.navTo("detail", {layout: oNextUIState.layout, author: author});
 		},
 		

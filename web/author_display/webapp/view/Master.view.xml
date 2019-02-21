@@ -8,7 +8,7 @@
 		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
-					<Title text="Authors and their books ({= ${authors>/Authors}.length})"/>
+					<Title text="Authors and their books ({authors>/Authors/length})"/>
 				</f:heading>
 			</f:DynamicPageTitle>
 		</f:title>

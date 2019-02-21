@@ -29,20 +29,9 @@ modules:
     memory: 128M
     disk_quota: 128M
 -
-  name: user_create
+  name: author_display
   type: html5
-  path: web/user_create
-  parameters:
-    disk-quota: 256M
-    memory: 256M
-  build-parameters:
-    builder: grunt
-  requires:
-  - {name: pt_uaa}
--
-  name: user_display
-  type: html5
-  path: web/user_display
+  path: web/author_display
   parameters:
     disk-quota: 256M
     memory: 256M
@@ -72,7 +61,7 @@ modules:
   requires:
   - {name: pt_deployer}
   build-parameters:
-    requires: [{name: user_create, artifacts: ['./*'], target-path: resources/user_create},{name: user_display, artifacts: ['./*'], target-path: resources/user_display}]
+    requires: [{name: author_display, artifacts: ['./*'], target-path: resources/author_display}]
   parameters:
     disk-quota: 256M
     memory: 128M
