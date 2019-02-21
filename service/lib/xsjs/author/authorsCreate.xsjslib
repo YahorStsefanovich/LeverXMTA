@@ -33,15 +33,17 @@ function authorsCreate(param){
     for( var i = 0; i < 2; i++){
         var pStmt;
         if(i < 1){
-            pStmt = param.connection.prepareStatement(`insert into \"${sTABLE_NAME}\" values(?,?)` );
+            pStmt = param.connection.prepareStatement(`insert into \"${sTABLE_NAME}\" values(?,?,?,?)` );
         }else{
             pStmt = param.connection.prepareStatement("TRUNCATE TABLE \"" + after + "\"" );
             pStmt.executeUpdate();
             pStmt.close();
-            pStmt = param.connection.prepareStatement("insert into \"" + after + "\" values(?,?)" );
+            pStmt = param.connection.prepareStatement("insert into \"" + after + "\" values(?,?,?,?)" );
         }
         pStmt.setString(1, oAuthor.author_id.toString());
         pStmt.setString(2, oAuthor.name.toString());
+        pStmt.setDate(3, new Date());
+        pStmt.setDate(4, new Date());
         pStmt.executeUpdate();
         pStmt.close();
     }

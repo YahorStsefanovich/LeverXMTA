@@ -34,7 +34,7 @@ sap.ui.define([
 			this.getView().byId("authorsTable").getBinding("items").filter(oTableSearchState, "Application");
 		},
 
-		
+
 		onAdd: function (oEvent) {
 			// MessageBox.show("This functionality is not ready yet.", {
 			// 	icon: MessageBox.Icon.INFORMATION,
@@ -54,6 +54,7 @@ sap.ui.define([
 			oBinding.sort(oSorter);
 		},
 
+        //works
         onUpdateFinished: function (oEvent) {
             // update the worklist's object counter after the table update
             var sTitle,
@@ -62,13 +63,37 @@ sap.ui.define([
             // only update the counter if the length is final and
             // the table is not empty
             if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-                sTitle = `Authors(${iTotalItems})`;
+                sTitle = 'Authors(' + iTotalItems + ')';
             } else {
                 sTitle = "Authors";
             }
             this.getView().byId("authorsTableTitle").setText(sTitle);
         },
 
-
+        onCreate : function () {
+            // var oList = this.byId("authorsTable"),
+            //     oBinding = oList.getBinding("items"),
+            //     oContext = oBinding.create({
+            //         "UserName" : "",
+            //         "FirstName" : "",
+            //         "LastName" : "",
+            //         "Age" : "18"
+            //     });
+            //
+            // oContext.created().then(function () {
+            //     oBinding.refresh();
+            // });
+            //
+            // this._setUIChanges();
+            // this.getView().getModel("appView").setProperty("/usernameEmpty", true);
+            //
+            // oList.getItems().some(function (oItem) {
+            //     if (oItem.getBindingContext() === oContext) {
+            //         oItem.focus();
+            //         oItem.setSelected(true);
+            //         return true;
+            //     }
+            // });
+        }
 	});
 }, true);

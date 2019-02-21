@@ -38,17 +38,8 @@
 									press="toggleAreaPriority"/>
 							<m:Button
 									text="Delete"
-									type="Transparent"/>
-							<m:Button
-									text="Copy"
-									type="Transparent"/>
-							<m:Button
-									text="Toggle Footer"
 									type="Transparent"
-									press="onToggleFooter"/>
-							<m:Button
-									icon="sap-icon://action"
-									type="Transparent"/>
+                            />
 						</actions>
 
 					</ObjectPageDynamicHeaderTitle>

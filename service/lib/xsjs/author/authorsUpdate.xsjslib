@@ -1,8 +1,7 @@
 var JsonFormatter = $.import('xsjs', 'JsonFormatter').formatter;
 
-const sTABLE_NAME = "HiMTA::Author";
-
 function authorsUpdate(param) {
+    //get table name
     var after = param.afterTableName;
 
     var pStmt = param.connection.prepareStatement("select * from \"" + after + "\"");
@@ -13,6 +12,11 @@ function authorsUpdate(param) {
     $.trace.error(JSON.stringify(oAuthor));
 
     var uStmt;
-    uStmt = param.connection.prepareStatement(`UPDATE "${sTABLE_NAME}" SET "name"='${oAuthor.name}' WHERE "author_id"='${oAuthor.author_id}';`);
+    var date = new Date();
+    // uStmt = param.connection.prepareStatement(`UPDATE "${after}" SET "name"='${oAuthor.name}', "updated"='${date}' WHERE "author_id"='${oAuthor.author_id}'`);
+    uStmt = param.connection.prepareStatement(`UPDATE "${after}" SET "name"=?, "updated"=? WHERE "author_id"=?`);
+    pStmt.setString(1, oAuthor.name.toString());
+    pStmt.setDate(2, date);
+    pStmt.setDate(3, oAuthor.author_id.toString());
     uStmt.executeUpdate();
 }
