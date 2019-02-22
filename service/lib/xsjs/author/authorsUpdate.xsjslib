@@ -1,7 +1,10 @@
 var JsonFormatter = $.import('xsjs', 'JsonFormatter').formatter;
 
+const sTABLE_NAME = "HiMTA::Author";
+
 function authorsUpdate(param) {
     //get table name
+    $.trace.error(JSON.stringify(param));
     var after = param.afterTableName;
 
     var pStmt = param.connection.prepareStatement("select * from \"" + after + "\"");
@@ -11,12 +14,12 @@ function authorsUpdate(param) {
     var oAuthor = oAuhtorItems.items[0];
     $.trace.error(JSON.stringify(oAuthor));
 
-    var uStmt;
-    var date = new Date();
-    // uStmt = param.connection.prepareStatement(`UPDATE "${after}" SET "name"='${oAuthor.name}', "updated"='${date}' WHERE "author_id"='${oAuthor.author_id}'`);
-    uStmt = param.connection.prepareStatement(`UPDATE "${after}" SET "name"=?, "updated"=? WHERE "author_id"=?`);
+    // var date = new Date();
+    // pStmt = param.connection.prepareStatement(`UPDATE \"${sTABLE_NAME}\" SET "name"='${oAuthor.name}', "updated"=${new Date()} WHERE "author_id"='${oAuthor.author_id}'`);
+    pStmt = param.connection.prepareStatement(`UPDATE \"${sTABLE_NAME}\" SET \"name\"=?, \"updated\"=? WHERE \"author_id\"=?`);
     pStmt.setString(1, oAuthor.name.toString());
-    pStmt.setDate(2, date);
-    pStmt.setDate(3, oAuthor.author_id.toString());
-    uStmt.executeUpdate();
+    pStmt.setDate(2, new Date());
+    pStmt.setString(3, oAuthor.author_id.toString());
+    pStmt.executeUpdate();
+    pStmt.close();
 }
