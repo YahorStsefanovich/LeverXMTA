@@ -3,8 +3,9 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
-	'sap/ui/model/Sorter'
-], function (JSONModel, Controller, Filter, FilterOperator, Sorter) {
+	"sap/ui/model/Sorter",
+    "sap/ui/core/Fragment"
+], function (JSONModel, Controller, Filter, FilterOperator, Sorter, Fragment) {
 	"use strict";
 
 	return Controller.extend("author_display.controller.Master", {
@@ -12,6 +13,73 @@ sap.ui.define([
 	    onInit: function () {
 			this.oRouter = this.getOwnerComponent().getRouter();
 			this._bDescendingSort = false;
+        },
+
+        createAuthor: function() {
+            var sName = this.getView().byId("newAuthorNameInput").getValue();
+
+            function successHandler(){
+                oTable.getModel("authors").refresh(true);
+            }
+
+            function errorHandler(){
+                //
+            }
+
+            if (!sName) {
+                var dialog = new sap.m.Dialog({
+                    title: 'Error',
+                    type: 'Message',
+                    state: 'Error',
+                    content: new sap.m.Text({
+                        text: 'Enter all necessarry field'
+                    }),
+                    beginButton: new sap.m.Button({
+                        text: 'OK',
+                        press: function() {
+                            dialog.close();
+                        }
+                    }),
+                    afterClose: function() {
+                        dialog.destroy();
+                    }
+                });
+
+                dialog.open();
+            } else {
+                var oTable = this.getView().byId('authorsTable');
+
+                var oData = {
+                    name: sName
+                };
+
+                oTable.getModel("authors").create("/Authors", oData, {
+                    success: successHandler,
+                    error: errorHandler
+                });
+            };
+
+            this.byId("createDialog").close();
+        },
+
+        onAdd: function() {
+            var oView = this.getView();
+            if (!this.byId("createDialog")) {
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "author_display.fragment.Dialog",
+                    controller: this
+                }).then(function(oDialog) {
+                    oView.addDependent(oDialog);
+                    oDialog.open();
+                });
+            } else {
+                this.byId("createDialog").open();
+            }
+        },
+
+        closeDialog: function() {
+            this.getView().byId("createDialog").close();
         },
 
         //works
@@ -32,15 +100,6 @@ sap.ui.define([
 			}
 
 			this.getView().byId("authorsTable").getBinding("items").filter(oTableSearchState, "Application");
-		},
-
-
-		onAdd: function (oEvent) {
-			// MessageBox.show("This functionality is not ready yet.", {
-			// 	icon: MessageBox.Icon.INFORMATION,
-			// 	title: "Aw, Snap!",
-			// 	actions: [MessageBox.Action.OK]
-			// });
 		},
 
 		//works
@@ -68,32 +127,6 @@ sap.ui.define([
                 sTitle = "Authors";
             }
             this.getView().byId("authorsTableTitle").setText(sTitle);
-        },
-
-        onCreate : function () {
-            // var oList = this.byId("authorsTable"),
-            //     oBinding = oList.getBinding("items"),
-            //     oContext = oBinding.create({
-            //         "UserName" : "",
-            //         "FirstName" : "",
-            //         "LastName" : "",
-            //         "Age" : "18"
-            //     });
-            //
-            // oContext.created().then(function () {
-            //     oBinding.refresh();
-            // });
-            //
-            // this._setUIChanges();
-            // this.getView().getModel("appView").setProperty("/usernameEmpty", true);
-            //
-            // oList.getItems().some(function (oItem) {
-            //     if (oItem.getBindingContext() === oContext) {
-            //         oItem.focus();
-            //         oItem.setSelected(true);
-            //         return true;
-            //     }
-            // });
         }
 	});
 }, true);
