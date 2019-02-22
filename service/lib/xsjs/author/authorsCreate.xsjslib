@@ -42,8 +42,8 @@ function authorsCreate(param){
         }
         pStmt.setString(1, oAuthor.author_id.toString());
         pStmt.setString(2, oAuthor.name.toString());
-        pStmt.setDate(3, new Date());
-        pStmt.setDate(4, new Date());
+        pStmt.setTimestamp(3, new Date());
+        pStmt.setTimestamp(4, new Date());
         pStmt.executeUpdate();
         pStmt.close();
     }

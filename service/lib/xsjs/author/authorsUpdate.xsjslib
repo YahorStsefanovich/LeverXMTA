@@ -14,11 +14,10 @@ function authorsUpdate(param) {
     var oAuthor = oAuhtorItems.items[0];
     $.trace.error(JSON.stringify(oAuthor));
 
-    // var date = new Date();
     // pStmt = param.connection.prepareStatement(`UPDATE \"${sTABLE_NAME}\" SET "name"='${oAuthor.name}', "updated"=${new Date()} WHERE "author_id"='${oAuthor.author_id}'`);
     pStmt = param.connection.prepareStatement(`UPDATE \"${sTABLE_NAME}\" SET \"name\"=?, \"updated\"=? WHERE \"author_id\"=?`);
     pStmt.setString(1, oAuthor.name.toString());
-    pStmt.setDate(2, new Date());
+    pStmt.setTimestamp(2, new Date());
     pStmt.setString(3, oAuthor.author_id.toString());
     pStmt.executeUpdate();
     pStmt.close();
