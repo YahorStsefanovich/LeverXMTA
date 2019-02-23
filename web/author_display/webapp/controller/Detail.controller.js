@@ -49,18 +49,35 @@ sap.ui.define([
 			});
 		},
 
+        //works
 		onDelete : function () {
-            // var oSelected = this.byId("authorsTable").getSelectedItem();
-            //
-            // if (oSelected) {
-            //     oSelected.getBindingContext().delete("$auto").then(function () {
-            //         MessageToast.show(this._getText("deletionSuccessMessage"));
-            //     }.bind(this), function (oError) {
-            //         MessageBox.error(oError.message);
-            //     });
-            // }
+
+            function successHandler(data){
+                console.log(data);
+                oModel.refresh();
+                console.log("deleted successfully");
+            }
+
+            function errorHandler(error){
+                console.log(error);
+                console.log("deleted ERROR!");
+            }
+
+            var oModel = this.getView().getModel("authors");
+            var sPath = this.getView().getElementBinding('authors').sPath;
+            var sId = sPath.slice(-6).substring(0, 4);
+            // var sFullPath = oModel.sServiceUrl;
+
+            //https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/author/author.xsjs?author_id=0001
+            $.ajax({
+                url: 'https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/author/author.xsjs?author_id=' + sId,
+                type: 'DELETE',
+                success: successHandler,
+                error: errorHandler
+            });
         },
 
+        //works
 		onEdit : function () {
             var editBtn = this.getView().byId("editBtn");
             editBtn.setEnabled(false);
@@ -70,13 +87,16 @@ sap.ui.define([
             authorNameText.focus();
         },
 
+        //works
         onAuthorNameSubmit : function () {
 
-            function successHandler(){
+            function successHandler(data){
+                console.log(data);
                 console.log("updated successfully");
             }
 
-            function errorHandler(){
+            function errorHandler(error){
+                console.log(error);
                 console.log("updating ERROR!");
             }
 
@@ -95,16 +115,6 @@ sap.ui.define([
                 created: new Date(),
                 updated: new Date()
             };
-
-            // $.ajax({
-            //     type: "PUT",
-            //     url: 'proxy/http/services.odata.org/V3/(S(javsoqela2hqsduwyhasapr2))/OData/OData.svc/Products(' + oProductId + ')',
-            //     dataType: "json",
-            //     data: JSON.stringify(oData),
-            //     contentType: "application/json; charset=utf-8" ,
-            //     success: successHandler,
-            //     error: errorHandler
-            // });
 
             oModel.update(sPath, oData, {
                 success: successHandler,

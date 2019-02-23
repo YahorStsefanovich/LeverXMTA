@@ -1,8 +1,7 @@
 <m:View displayBlock="true" controllerName="author_display.controller.Detail" height="100%"
-		xmlns="sap.uxap"
-		xmlns:m="sap.m"
-		xmlns:f="sap.f"
-		xmlns:form="sap.ui.layout.form">
+        xmlns="sap.uxap"
+        xmlns:m="sap.m"
+        xmlns:form="sap.ui.layout.form">
 
 	<ObjectPageLayout id="ObjectPageLayout"
 					 showTitleInHeaderContent="true"
@@ -40,7 +39,7 @@
 							/>
 							<m:Button
 									text="{i18n>deleteBtnName}"
-									type="Transparent"
+									type="Emphasized"
 									press=".onDelete"
                             />
 						</actions>
