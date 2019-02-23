@@ -57,7 +57,8 @@ sap.ui.define([
                     success: successHandler,
                     error: errorHandler
                 });
-            };
+
+            }
 
             this.byId("createDialog").close();
         },

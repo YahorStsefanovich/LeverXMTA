@@ -33,12 +33,15 @@
 
 						<actions>
 							<m:Button
-									text="Edit"
+                                    id="editBtn"
+									text="{i18n>editBtnName}"
 									type="Emphasized"
-									press="toggleAreaPriority"/>
+									press=".onEdit"
+							/>
 							<m:Button
-									text="Delete"
+									text="{i18n>deleteBtnName}"
 									type="Transparent"
+									press=".onDelete"
                             />
 						</actions>
 
@@ -81,7 +84,13 @@
 									<m:Label text="Author ID"/>
 									<m:Text text="{authors>author_id}"/>
 									<m:Label text="Author name"/>
-									<m:Text text="{authors>name}"/>
+									<m:Input
+                                            id="authorNameText"
+                                            value="{authors>name}"
+                                            required="true"
+                                            enabled="false"
+                                            submit="onAuthorNameSubmit"
+                                    />
 								</form:content>
 							</form:SimpleForm>
 						</blocks>
