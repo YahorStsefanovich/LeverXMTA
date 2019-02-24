@@ -117,14 +117,13 @@ sap.ui.define([
         //works
         onUpdateFinished: function (oEvent) {
             // update the worklist's object counter after the table update
-            var sTitle,
-                oTable = oEvent.getSource(),
+            var oTable = oEvent.getSource(),
                 iTotalItems = oEvent.getParameter("total");
             // only update the counter if the length is final and
             // the table is not empty
             var sTitle = this.getView().getModel("i18n").getResourceBundle().getText("authorsTitle");
             if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-                sTitle = `${sTitle}(${iTotalItems})`;
+                sTitle = sTitle + "(" + iTotalItems + ")";
             }
             this.getView().byId("authorsTableTitle").setText(sTitle);
         }

@@ -1,9 +1,9 @@
-const Author = $.import('xsjs.author', 'author').Author;
+const Address = $.import('xsjs.address', 'address').Address;
 
 const PREFIX = "HiMTA::";
-const TABLE_NAME = "Author";
+const TABLE_NAME = "ExtraInfo.Address";
 
-const authors = new Author(
+const address = new Address(
     $.hdb.getConnection({ treatDateAsUTC: true}),
     PREFIX,
     TABLE_NAME
@@ -13,16 +13,12 @@ const authors = new Author(
     (function handleRequest() {
         try {
             switch ($.request.method) {
-                case $.net.http.PUT : {
-                    authors.doPut(JSON.parse($.request.body.asString()));
-                    break;
-                }
                 case $.net.http.POST : {
-                    authors.doPost(JSON.parse($.request.body.asString()));
+                    address.doPost(JSON.parse($.request.body.asString()));
                     break;
                 }
                 case $.net.http.DEL : {
-                    authors.doDelete($.request.parameters.get("author_id"));
+                    address.doDelete($.request.parameters.get("author_id"));
                     break;
                 }
                 default: {

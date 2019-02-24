@@ -68,6 +68,10 @@ sap.ui.define([
             var sId = sPath.slice(-6).substring(0, 4);
             // var sFullPath = oModel.sServiceUrl;
 
+            //close view
+            var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/midColumn/closeColumn");
+            this.oRouter.navTo("master", {layout: sNextLayout});
+
             $.ajax({
                 url: 'https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/author/author.xsjs?author_id=' + sId,
                 type: 'DELETE',

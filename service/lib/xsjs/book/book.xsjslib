@@ -1,47 +1,26 @@
 var PreparedStatementLib = $.import('xsjs', 'preparedStatement').lib;
 
-var Author = function (connection, prefix, tableName) {
+var Book = function (connection, prefix, tableName) {
 
     const sPREFIX = prefix;
     const sTABLE_NAME = prefix + tableName;
 
     //OK
-    this.doPost = function (oAuthor) {
+    this.doPost = function (oBook) {
 
-        $.trace.error("oAuthor:   " + JSON.stringify(oAuthor));
+        $.trace.error("oBook:   " + JSON.stringify(oBook));
         //Get Next ID Number
-        oAuthor.author_id = getNextval(`${sPREFIX}author_id`);
+        oBook.author_id = getNextval(`${sPREFIX}book_id`);
 
         //generate query
-        const statement = PreparedStatementLib.createPreparedInsertStatement(sTABLE_NAME, oAuthor);
+        const statement = PreparedStatementLib.createPreparedInsertStatement(sTABLE_NAME, oBook);
 
         //execute update
         connection.executeUpdate(statement.sql, statement.aValues);
         connection.commit();
 
         $.response.status = $.net.http.CREATED;
-        $.response.setBody(JSON.stringify(oAuthor));
-    };
-
-    //OK
-    this.doPut = function (oAuthor) {
-        //generate query
-        let oResult = {
-            aParams: [],
-            aValues: [],
-            sql: "",
-        };
-
-        oResult.sql = `UPDATE "${sTABLE_NAME}" SET "name"='${oAuthor.name}' WHERE "author_id"=${oAuthor.author_id};`;
-
-        $.trace.error("sql to update: " + oResult.sql);
-
-        //execute update
-        connection.executeUpdate(oResult.sql, oResult.aValues);
-        connection.commit();
-
-        $.response.status = $.net.http.OK;
-        $.response.setBody(JSON.stringify(oAuthor));
+        $.response.setBody(JSON.stringify(oBook));
     };
 
     //OK
