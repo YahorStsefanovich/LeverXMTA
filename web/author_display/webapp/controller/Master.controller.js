@@ -122,10 +122,9 @@ sap.ui.define([
                 iTotalItems = oEvent.getParameter("total");
             // only update the counter if the length is final and
             // the table is not empty
+            var sTitle = this.getView().getModel("i18n").getResourceBundle().getText("authorsTitle");
             if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-                sTitle = 'Authors(' + iTotalItems + ')';
-            } else {
-                sTitle = "Authors";
+                sTitle = `${sTitle}(${iTotalItems})`;
             }
             this.getView().byId("authorsTableTitle").setText(sTitle);
         }

@@ -68,7 +68,6 @@ sap.ui.define([
             var sId = sPath.slice(-6).substring(0, 4);
             // var sFullPath = oModel.sServiceUrl;
 
-            //https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/author/author.xsjs?author_id=0001
             $.ajax({
                 url: 'https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/author/author.xsjs?author_id=' + sId,
                 type: 'DELETE',
@@ -79,12 +78,8 @@ sap.ui.define([
 
         //works
 		onEdit : function () {
-            var editBtn = this.getView().byId("editBtn");
-            editBtn.setEnabled(false);
-
-            var authorNameText = this.getView().byId("authorNameText");
-            authorNameText.setEnabled(true);
-            authorNameText.focus();
+            this.getView().getModel("config").setProperty("/editBtn/enabled", false);
+            this.getView().getModel("config").setProperty("/authorNameInput/enabled", true);
         },
 
         //works
@@ -101,8 +96,9 @@ sap.ui.define([
             }
 
             //disable textField
-            var authorNameText = this.getView().byId("authorNameText");
-            authorNameText.setEnabled(false);
+            var authorNameText = this.getView().byId("authorNameInput");
+            // authorNameText.setEnabled(false);
+            this.getView().getModel("config").setProperty("/authorNameInput/enabled", false);
 
             var oModel = this.getView().getModel("authors");
             oModel.sDefaultUpdateMethod = "PUT";
@@ -121,8 +117,7 @@ sap.ui.define([
                 error: errorHandler
             });
 
-            var editBtn = this.getView().byId("editBtn");
-            editBtn.setEnabled(true);
+            this.getView().getModel("config").setProperty("/editBtn/enabled", true);
         }
 	});
 }, true);

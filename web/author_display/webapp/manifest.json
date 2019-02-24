@@ -43,6 +43,10 @@
 				"settings": {
 					"disableHeadRequestForToken": true
 				}
+			},
+			"config":{
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "./model/config.json"
 			}
 		},
 		"dependencies": {

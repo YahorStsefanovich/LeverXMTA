@@ -35,13 +35,13 @@
 				</headerToolbar>
 				<columns>
 					<Column width="12em">
-						<Text text="Author name" />
+						<Text text="{i18n>authorNameText}"/>
 					</Column>
 					<Column	hAlign="Center">
-						<Text text="Created" />
+						<Text text="{i18n>authorCreatedText}"/>
 					</Column>
 					<Column	hAlign="Center">
-						<Text text="Last modified" />
+						<Text text="{i18n>authorUpdatedText}"/>
 					</Column>
 				</columns>
 				<items>

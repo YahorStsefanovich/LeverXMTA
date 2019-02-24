@@ -36,11 +36,14 @@
 									text="{i18n>editBtnName}"
 									type="Emphasized"
 									press=".onEdit"
+									enabled="{config>/editBtn/enabled}"
+									icon="sap-icon://edit"
 							/>
 							<m:Button
 									text="{i18n>deleteBtnName}"
 									type="Emphasized"
 									press=".onDelete"
+									icon="sap-icon://delete"
                             />
 						</actions>
 
@@ -50,22 +53,22 @@
 				<headerContent>
 					<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
 						<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-							<m:Label text="Street"/>
+							<m:Label text="{i18n>addressStreetLabel}"/>
 							<m:Text text="{= !${authors>toAddress/strt} ? '-' : ${authors>toAddress/strt}}"/>
 						</m:VBox>
 						<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-							<m:Label text="Home number"/>
+							<m:Label text="{i18n>addressHomeLabel}"/>
 							<m:Text text="{= !${authors>toAddress/hnum} ? '-' : ${authors>toAddress/hnum}}"/>
 						</m:VBox>
 						<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-							<m:Label text="City"/>
+							<m:Label text="{i18n>addressCityLabel}"/>
 							<m:ObjectNumber number="{= !${authors>toAddress/city} ? '-' : ${authors>toAddress/city}}" emphasized="false"/>
 						</m:VBox>
 					</m:FlexBox>
 				</headerContent>
 
 		<sections>
-			<ObjectPageSection title="General Information">
+			<ObjectPageSection title="{i18n>generalInfo}">
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
@@ -80,14 +83,14 @@
 								columnsL="1"
 								columnsM="1">
 								<form:content>
-									<m:Label text="Author ID"/>
+									<m:Label text="{i18n>authorIDLabel}"/>
 									<m:Text text="{authors>author_id}"/>
-									<m:Label text="Author name"/>
+									<m:Label text="{i18n>authorNameLabel}"/>
 									<m:Input
-                                            id="authorNameText"
+                                            id="authorNameInput"
                                             value="{authors>name}"
-                                            required="true"
-                                            enabled="false"
+                                            required="{config>/authorNameInput/required}"
+                                            enabled="{config>/authorNameInput/enabled}"
                                             submit="onAuthorNameSubmit"
                                     />
 								</form:content>
@@ -97,7 +100,7 @@
 				</subSections>
 			</ObjectPageSection>
 
-			<ObjectPageSection title="Books">
+			<ObjectPageSection title="{i18n>booksTitle}">
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
