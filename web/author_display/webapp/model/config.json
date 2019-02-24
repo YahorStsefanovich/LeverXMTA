@@ -1,7 +1,17 @@
 {
   "authorNameInput": {
     "enabled": false,
-    "required": true
+    "required": true,
+    "value": ""
+  },
+  "newAddressCity":{
+    "value": ""
+  },
+  "newAddressStreet":{
+    "value": ""
+  },
+  "newAddressHome":{
+    "value": ""
   },
   "editBtn": {
     "enabled": true

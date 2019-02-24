@@ -12,7 +12,7 @@ sap.ui.define([
 
 			this.oRouter.getRoute("master").attachPatternMatched(this._onProductMatched, this);
 			this.oRouter.getRoute("detail").attachPatternMatched(this._onProductMatched, this);
-			this.oRouter.getRoute("detailDetail").attachPatternMatched(this._onProductMatched, this);
+			// this.oRouter.getRoute("detailDetail").attachPatternMatched(this._onProductMatched, this);
 		},
 
 		handleItemPress: function (oEvent) {
@@ -20,7 +20,7 @@ sap.ui.define([
 				bookPath = oEvent.getSource().getBindingContext("authors").getPath(),
 				book = bookPath.split("/").slice(-1).pop();
 
-			this.oRouter.navTo("detailDetail", {layout: oNextUIState.layout, book: book});
+			// this.oRouter.navTo("detailDetail", {layout: oNextUIState.layout, book: book});
 		},
 
 		handleFullScreen: function () {

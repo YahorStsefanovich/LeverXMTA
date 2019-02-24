@@ -18,12 +18,25 @@ sap.ui.define([
         createAuthor: function() {
             var sName = this.getView().byId("newAuthorNameInput").getValue();
 
-            function successHandler(){
-                oTable.getModel("authors").refresh(true);
+            function successHandler(data){
+                oView.refresh(true);
+                console.log("Created");
+                console.log(data);
+
+                oAddress.author_id = data.author_id;
+
+                $.ajax({
+                    url: 'https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/address/address.xsjs',
+                    type: 'POST',
+                    data: JSON.stringify(oAddress),
+                    success: null,
+                    error: null
+                });
             }
 
-            function errorHandler(){
-                //
+            function errorHandler(error){
+                console.log("Error creating");
+                console.log(error);
             }
 
             if (!sName) {
@@ -47,16 +60,23 @@ sap.ui.define([
 
                 dialog.open();
             } else {
-                var oTable = this.getView().byId('authorsTable');
+                var oView = this.getView().getModel("authors");
 
-                var oData = {
+
+                var oAuthor = {
                     name: sName
                 };
 
-                oTable.getModel("authors").create("/Authors", oData, {
+                oView.create("/Authors", oAuthor, {
                     success: successHandler,
                     error: errorHandler
                 });
+
+                var oAddress = {
+                    city: this.getView().getModel("config").getProperty("/newAddressCity/value"),
+                    strt: this.getView().getModel("config").getProperty("/newAddressStreet/value"),
+                    hnum: this.getView().getModel("config").getProperty("/newAddressHome/value")
+                }
 
             }
 

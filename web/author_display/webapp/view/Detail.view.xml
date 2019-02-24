@@ -115,7 +115,7 @@
 									</m:Column>
 								</m:columns>
 								<m:items>
-									<m:ColumnListItem type="Navigation" press="handleItemPress">
+									<m:ColumnListItem press="handleItemPress">
 										<m:cells>
 											<m:ObjectIdentifier text="{authors>book_id}" />
 											<m:ObjectIdentifier text="{authors>name}" />
