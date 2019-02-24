@@ -100,12 +100,19 @@
 				</subSections>
 			</ObjectPageSection>
 
-			<ObjectPageSection title="{i18n>booksTitle}">
+			<ObjectPageSection  title="{i18n>booksTitle}">
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
 							<m:Table id="booksTable"
 									 items="{path : 'authors>toBooks'}">
+								<m:headerToolbar>
+									<m:OverflowToolbar>
+										<m:Title text="{i18n>booksTitle}"/>
+										<m:ToolbarSpacer/>
+										<m:Button icon="sap-icon://add" type="Transparent" press="onAdd"/>
+									</m:OverflowToolbar>
+								</m:headerToolbar>
 								<m:columns>
 									<m:Column>
 										<m:Text text="{i18n>bookId}"/>

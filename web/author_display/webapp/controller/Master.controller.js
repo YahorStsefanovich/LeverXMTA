@@ -19,14 +19,14 @@ sap.ui.define([
             var sName = this.getView().byId("newAuthorNameInput").getValue();
 
             function successHandler(data){
-                oView.refresh(true);
+                oModel.refresh(true);
                 console.log("Created");
                 console.log(data);
 
                 oAddress.author_id = data.author_id;
 
                 $.ajax({
-                    url: 'https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/address/address.xsjs',
+                    url: sAddressURI,
                     type: 'POST',
                     data: JSON.stringify(oAddress),
                     success: null,
@@ -60,14 +60,14 @@ sap.ui.define([
 
                 dialog.open();
             } else {
-                var oView = this.getView().getModel("authors");
-
+                var oModel = this.getView().getModel("authors");
+                var sAddressURI = this.getView().getModel("config").getProperty("/addressURI");
 
                 var oAuthor = {
                     name: sName
                 };
 
-                oView.create("/Authors", oAuthor, {
+                oModel.create("/Authors", oAuthor, {
                     success: successHandler,
                     error: errorHandler
                 });

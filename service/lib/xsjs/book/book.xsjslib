@@ -10,7 +10,7 @@ var Book = function (connection, prefix, tableName) {
 
         $.trace.error("oBook:   " + JSON.stringify(oBook));
         //Get Next ID Number
-        oBook.author_id = getNextval(`${sPREFIX}book_id`);
+        oBook.book_id = getNextval(`${sPREFIX}book_id`);
 
         //generate query
         const statement = PreparedStatementLib.createPreparedInsertStatement(sTABLE_NAME, oBook);
@@ -35,13 +35,13 @@ var Book = function (connection, prefix, tableName) {
 
     //OK
     function getNextval(sSeqName) {
-        const statement = `select "${sSeqName}".NEXTVAL as "ID" from dummy`;
+        const statement = `select "${sSeqName}".NEXTVAL as "bookID" from dummy`;
 
         const result = connection.executeQuery(statement);
 
         if (result.length > 0) {
-            $.trace.error("ID: " + result[0].ID);
-            return result[0].ID;
+            $.trace.error("ID: " + result[0].bookID);
+            return result[0].bookID;
         } else {
             throw new Error('ID was not generated');
         }

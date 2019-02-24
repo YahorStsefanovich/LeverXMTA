@@ -1,7 +1,8 @@
 sap.ui.define([
 	"sap/ui/model/json/JSONModel",
-	"sap/ui/core/mvc/Controller"
-], function (JSONModel, Controller) {
+	"sap/ui/core/mvc/Controller",
+    "sap/ui/core/Fragment"
+], function (JSONModel, Controller, Fragment) {
 	"use strict";
 
 	return Controller.extend("author_display.controller.Detail", {
@@ -12,15 +13,12 @@ sap.ui.define([
 
 			this.oRouter.getRoute("master").attachPatternMatched(this._onProductMatched, this);
 			this.oRouter.getRoute("detail").attachPatternMatched(this._onProductMatched, this);
-			// this.oRouter.getRoute("detailDetail").attachPatternMatched(this._onProductMatched, this);
 		},
 
 		handleItemPress: function (oEvent) {
 			var oNextUIState = this.getOwnerComponent().getHelper().getNextUIState(2),
 				bookPath = oEvent.getSource().getBindingContext("authors").getPath(),
 				book = bookPath.split("/").slice(-1).pop();
-
-			// this.oRouter.navTo("detailDetail", {layout: oNextUIState.layout, book: book});
 		},
 
 		handleFullScreen: function () {
@@ -72,6 +70,7 @@ sap.ui.define([
             var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/midColumn/closeColumn");
             this.oRouter.navTo("master", {layout: sNextLayout});
 
+            // oModel.remove(sPath, {success: successHandler, error: errorHandler});
             $.ajax({
                 url: 'https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/author/author.xsjs?author_id=' + sId,
                 type: 'DELETE',
@@ -122,6 +121,86 @@ sap.ui.define([
             });
 
             this.getView().getModel("config").setProperty("/editBtn/enabled", true);
-        }
+        },
+
+        createBook: function() {
+            var sName = this.getView().byId("newBookName").getValue();
+
+            function successHandler(data){
+                oModel.refresh(true);
+                console.log("Created book");
+                console.log(data);
+            }
+
+            function errorHandler(error){
+                console.log("Error creating book");
+                console.log(error);
+            }
+
+            if (!sName) {
+                var dialog = new sap.m.Dialog({
+                    title: 'Error',
+                    type: 'Message',
+                    state: 'Error',
+                    content: new sap.m.Text({
+                        text: 'Enter all necessarry field'
+                    }),
+                    beginButton: new sap.m.Button({
+                        text: 'OK',
+                        press: function() {
+                            dialog.close();
+                        }
+                    }),
+                    afterClose: function() {
+                        dialog.destroy();
+                    }
+                });
+
+                dialog.open();
+            } else {
+                var oModel = this.getView().getModel("authors");
+                var sBookURI = this.getView().getModel("config").getProperty("/bookURI");
+                var sPath = this.getView().getElementBinding('authors').sPath;
+                var sId = sPath.slice(-6).substring(0, 4);
+
+                var oBook = {
+                    // book_id: this.getView().getModel("config").getProperty("/newBookID/value"),
+                    author_id: sId,
+                    name: this.getView().getModel("config").getProperty("/newBookName/value")
+                };
+
+                $.ajax({
+                    url: sBookURI,
+                    type: 'POST',
+                    data: JSON.stringify(oBook),
+                    success: successHandler,
+                    error: errorHandler
+                });
+
+            }
+
+            this.byId("bookDialog").close();
+        },
+
+        //add book openDialog
+        onAdd: function() {
+            var oView = this.getView();
+            if (!this.byId("bookDialog")) {
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "author_display.fragment.DialogBook",
+                    controller: this
+                }).then(function(oDialog) {
+                    oView.addDependent(oDialog);
+                    oDialog.open();
+                });
+            } else {
+                this.byId("bookDialog").open();
+            }
+        },
+
+        closeDialog: function() {
+            this.getView().byId("bookDialog").close();
+        },
 	});
 }, true);
