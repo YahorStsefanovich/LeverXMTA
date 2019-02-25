@@ -26,7 +26,7 @@
     "enabled": true
   },
 
-  "addressURI": "https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/address/address.xsjs",
-  "bookURI": "https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/book/book.xsjs",
-  "authorURI": "https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/author/author.xsjs"
+  "addressURI": "https://p2001062767trial-yegorstsefanovich-leverx-learning-proj392a3ec7.cfapps.eu10.hana.ondemand.com/api/xsjs/address/address.xsjs",
+  "bookURI": "https://p2001062767trial-yegorstsefanovich-leverx-learning-proj392a3ec7.cfapps.eu10.hana.ondemand.com/api/xsjs/book/book.xsjs",
+  "authorURI": "https://p2001062767trial-yegorstsefanovich-leverx-learning-proj392a3ec7.cfapps.eu10.hana.ondemand.com/api/xsjs/author/author.xsjs"
 }

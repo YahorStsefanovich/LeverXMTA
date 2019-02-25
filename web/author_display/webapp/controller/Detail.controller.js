@@ -54,6 +54,30 @@ sap.ui.define([
                 console.log(data);
                 oModel.refresh();
                 console.log("deleted successfully");
+
+                var sBookURI = oBundle.getProperty("/bookURI");
+                $.ajax({
+                    url: sBookURI + '?author_id=' + sId,
+                    type: 'DELETE',
+                    success: function () {
+                        console.log("delete books")
+                    },
+                    error: function () {
+                        console.error("error deleting books")
+                    }
+                });
+
+                var sAddressURI = oBundle.getProperty("/addressURI");
+                $.ajax({
+                    url: sAddressURI + '?author_id=' + sId,
+                    type: 'DELETE',
+                    success: function () {
+                        console.log("delete address")
+                    },
+                    error: function () {
+                        console.error("error deleting address")
+                    }
+                });
             }
 
             function errorHandler(error){
@@ -64,13 +88,14 @@ sap.ui.define([
             var oModel = this.getView().getModel("authors");
             var sPath = this.getView().getElementBinding('authors').sPath;
             var sId = sPath.slice(-6).substring(0, 4);
+            var oBundle = this.getView().getModel("config");
 
             //close view
             var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/midColumn/closeColumn");
             this.oRouter.navTo("master", {layout: sNextLayout});
 
             // oModel.remove(sPath, {success: successHandler, error: errorHandler});
-            var sAuthorURI = this.getView().getModel("config").getProperty("/authorURI");
+            var sAuthorURI = oBundle.getProperty("/authorURI");
             $.ajax({
                 url: sAuthorURI + '?author_id=' + sId,
                 type: 'DELETE',

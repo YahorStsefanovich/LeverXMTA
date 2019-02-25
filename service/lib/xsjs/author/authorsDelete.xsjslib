@@ -17,7 +17,7 @@ function authorsDelete(param) {
 
     //DELETE messages , usersmessages  FROM messages  INNER JOIN usersmessages
     // WHERE messages.messageid= usersmessages.messageid and messages.messageid = '1'
-    pStmt = param.connection.prepareStatement(`DELETE FROM \"${sTABLE_NAME}\" WHERE \"author_id\"=?`);
+    pStmt = param.connection.prepareStatement(`DELETE FROM \"${after}\" WHERE \"author_id\"=?`);
     pStmt.setString(1, oAuthor.author_id.toString());
     pStmt.executeUpdate();
     pStmt.close();

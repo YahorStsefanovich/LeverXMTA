@@ -10,17 +10,26 @@ sap.ui.define([
 
 	return Controller.extend("author_display.controller.Master", {
 
+        /**
+         * Initialization
+         */
 	    onInit: function () {
 			this.oRouter = this.getOwnerComponent().getRouter();
 			this._bDescendingSort = false;
         },
 
+        /**
+         * Add new author and his address to db. If author created successfully,
+         * then created address. Only author's name MUST be not empty
+         */
         createAuthor: function() {
+            //get author name from dialog input
             var sName = this.getView().getModel("config").getProperty("/newAuthorNameInput/value");
 
+            //case success create address
             function successHandler(data){
                 oModel.refresh(true);
-                console.log("Created");
+                console.log("author created");
                 console.log(data);
 
                 oAddress.author_id = data.author_id;
@@ -35,11 +44,12 @@ sap.ui.define([
             }
 
             function errorHandler(error){
-                console.error("Error creating");
+                console.error("Error creating author");
                 console.error(error);
             }
 
             if (!sName) {
+                //show dialog to create author
                 var dialog = new sap.m.Dialog({
                     title: 'Error',
                     type: 'Message',
