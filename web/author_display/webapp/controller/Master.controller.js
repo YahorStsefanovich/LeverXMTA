@@ -16,7 +16,7 @@ sap.ui.define([
         },
 
         createAuthor: function() {
-            var sName = this.getView().byId("newAuthorNameInput").getValue();
+            var sName = this.getView().getModel("config").getProperty("/newAuthorNameInput/value");
 
             function successHandler(data){
                 oModel.refresh(true);
@@ -35,8 +35,8 @@ sap.ui.define([
             }
 
             function errorHandler(error){
-                console.log("Error creating");
-                console.log(error);
+                console.error("Error creating");
+                console.error(error);
             }
 
             if (!sName) {
@@ -145,7 +145,7 @@ sap.ui.define([
             if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
                 sTitle = sTitle + "(" + iTotalItems + ")";
             }
-            this.getView().byId("authorsTableTitle").setText(sTitle);
+            this.getView().getModel("config").setProperty("/authorsTableTitle/value", sTitle);
         }
 	});
 }, true);

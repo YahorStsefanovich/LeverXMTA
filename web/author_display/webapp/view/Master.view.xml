@@ -8,9 +8,7 @@
 		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
-					<Title
-                            id="authorsTableTitle"
-                    />
+					<Title id="authorsTableTitle" text="{config>/authorsTableTitle/value}"/>
 				</f:heading>
 			</f:DynamicPageTitle>
 		</f:title>

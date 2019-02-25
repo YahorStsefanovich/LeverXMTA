@@ -57,22 +57,22 @@ sap.ui.define([
             }
 
             function errorHandler(error){
-                console.log(error);
-                console.log("deleted ERROR!");
+                console.error(error);
+                console.error("deleted ERROR!");
             }
 
             var oModel = this.getView().getModel("authors");
             var sPath = this.getView().getElementBinding('authors').sPath;
             var sId = sPath.slice(-6).substring(0, 4);
-            // var sFullPath = oModel.sServiceUrl;
 
             //close view
             var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/midColumn/closeColumn");
             this.oRouter.navTo("master", {layout: sNextLayout});
 
             // oModel.remove(sPath, {success: successHandler, error: errorHandler});
+            var sAuthorURI = this.getView().getModel("config").getProperty("/authorURI");
             $.ajax({
-                url: 'https://p2001062767trial-yegorstsefanovich-leverx-learning-proj378edac5.cfapps.eu10.hana.ondemand.com/xsjs/author/author.xsjs?author_id=' + sId,
+                url: sAuthorURI + '?author_id=' + sId,
                 type: 'DELETE',
                 success: successHandler,
                 error: errorHandler
@@ -94,8 +94,8 @@ sap.ui.define([
             }
 
             function errorHandler(error){
-                console.log(error);
-                console.log("updating ERROR!");
+                console.error(error);
+                console.error("updating ERROR!");
             }
 
             //disable textField
@@ -133,8 +133,8 @@ sap.ui.define([
             }
 
             function errorHandler(error){
-                console.log("Error creating book");
-                console.log(error);
+                console.error("Error creating book");
+                console.error(error);
             }
 
             if (!sName) {

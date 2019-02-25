@@ -7,7 +7,7 @@
             <l:VerticalLayout>
                 <l:content>
                     <Label text="{i18n>newAuthorName}" width="300px" labelFor="newAuthorNameInput"/>
-                    <Input id="newAuthorNameInput" width="300px" required="true"/>
+                    <Input id="newAuthorNameInput" width="300px" required="true" value="{config>/newAuthorNameInput/value}"/>
 
                     <Label text="{i18n>newAddressCity}" width="300px" labelFor="newAddressCity"/>
                     <Input id="newAddressCity" width="300px" required="false" value="{config>/newAddressCity/value}"/>
