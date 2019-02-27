@@ -1,7 +1,6 @@
 package com.leverx.leverxspringproj.dao;
 
 import com.leverx.leverxspringproj.domain.Author;
-import com.leverx.leverxspringproj.domain.Book;
 import com.leverx.leverxspringproj.intfce.IAuthorDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,23 +19,14 @@ import java.util.Optional;
 @Repository
 public class AuthorDao implements IAuthorDao {
 	private static final Logger logger = LoggerFactory.getLogger(AuthorDao.class);
-//	private AuthorDao authorDaoInstance;
 
 	private final DataSource dataSource;
+
 
 	@Autowired
 	public AuthorDao(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-
-//	private AuthorDao(){}
-//
-//	public AuthorDao getDao(){
-//		if (authorDaoInstance == null){
-//			authorDaoInstance = new AuthorDao();
-//		}
-//		return authorDaoInstance;
-//	}
 
 	@Override  
 	public Optional<Author> getById(String id) {

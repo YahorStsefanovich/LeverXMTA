@@ -14,27 +14,27 @@ public class AuthorController {
 	private AuthorService authorService;
 	   
 	@GetMapping(value="/Author")
-	public List<Author> getAllFlower() {
+	public List<Author> getAuthorAll() {
 		return authorService.getAuthorsAll();
 	}
 	
 	@GetMapping(value="/Author/{id}")
-	public Author getFlower(@PathVariable String id) {
+	public Author getAuthor(@PathVariable String id) {
 		return authorService.getAuthor(id);
 	}    
 	
 	@PostMapping(value="/Author")
-	public void createFlower(@RequestBody Author author) {
+	public void createAuthor(@RequestBody Author author) {
 		authorService.createAuthor(author);
 	}    
 	
 	@DeleteMapping(value="/Author/{id}")
-	public void deleteFlower(@PathVariable String id) {
+	public void deleteAuthor(@PathVariable String id) {
 		authorService.deleteAuthor(id);
 	}    
 	
 	@PutMapping(value="/Author")
-	public void updateFlower(@RequestBody Author author) {
+	public void updateAuthor(@RequestBody Author author) {
 		authorService.updateAuthor(author);
 	}
 	
