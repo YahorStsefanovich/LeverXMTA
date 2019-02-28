@@ -1,7 +1,5 @@
 package com.leverx.leverxspringproj.domain;
 
-import java.util.List;
-
 public class Book {
 
     private String bookId;
