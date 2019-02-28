@@ -30,8 +30,9 @@ public class ODataDao implements IOdataDao {
                     .build()
                     .execute(destinationName);
             List<Map<String, Object>> listMap = result.asListOfMaps();
-            logger.debug("OData: " + getODataList(listMap));
-            return  getODataList(listMap);
+            productList = getListFromResultSet(listMap);
+            logger.info("Products list: " + getListFromResultSet(listMap));
+
         } catch (ODataException e) {
             logger.error("Can't get list of entities: " + e.getMessage());
         }
@@ -39,7 +40,7 @@ public class ODataDao implements IOdataDao {
         return productList;
     }
 
-    private List<Product> getODataList(List<Map<String, Object>> listMap){
+    private List<Product> getListFromResultSet(List<Map<String, Object>> listMap){
         List<Product> productList = new ArrayList<>();
 
         listMap.forEach(item -> {
@@ -65,6 +66,7 @@ public class ODataDao implements IOdataDao {
         );
     }
 
+    @Override
     public List<Product> getAll(){
         throw new NotImplementedException();
     }
@@ -75,17 +77,17 @@ public class ODataDao implements IOdataDao {
     }
 
     @Override
-    public void save(Product entity){
+    public Product createEntity(Product entity){
         throw new NotImplementedException();
     }
 
     @Override
-    public void delete(String key){
+    public String deleteEntity(String key){
         throw new NotImplementedException();
     }
 
     @Override
-    public void update(Product entity) {
+    public Product updateEntity(Product entity) {
         throw new NotImplementedException();
     }
 }

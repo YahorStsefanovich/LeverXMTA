@@ -23,6 +23,7 @@ public class BookDao implements IBookDao {
     private static final String TABLE_NAME = "javaCFMTA::ExtraInfo.Book";
     private static final String BOOK_ID = "book_id";
     private static final String BOOK_NAME = "name";
+    private static final String sequenceName = "javaCFMTA::book_id";
 
     private final DataSource dataSource;
 
@@ -83,22 +84,24 @@ public class BookDao implements IBookDao {
     }
 
     @Override
-    public void save(Book entity) {
+    public Book createEntity(Book entity) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmnt = conn.prepareStatement(
              String.format("INSERT INTO \"%s\"(\"author_id\", \"%s\", \"%s\") VALUES (?,?,?)", TABLE_NAME, BOOK_ID, BOOK_NAME)))
         {
-        	stmnt.setString(1, entity.getAuthorId());
-        	stmnt.setString(1, entity.getBookId());
-        	stmnt.setString(1, entity.getName());
+        	stmnt.setString(1, entity.getAuthor_id());
+        	stmnt.setString(2, Sequence.getNextValue(dataSource, sequenceName, logger));
+        	stmnt.setString(3, entity.getName());
             stmnt.execute();
         } catch (SQLException e) {
             logger.error("Can't add entity: " + e.getMessage());
         }
+
+        return entity;
     }
 
     @Override
-    public void delete(String id) {
+    public String deleteEntity(String id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmnt = conn.prepareStatement(String.format("DELETE FROM \"%s\" WHERE \"%s\" = ?", TABLE_NAME, BOOK_ID)))
         {
@@ -107,19 +110,23 @@ public class BookDao implements IBookDao {
         } catch (SQLException e) {
             logger.error("Can't delete entity: " + e.getMessage());
         }
+
+        return id;
     }
 
     @Override
-    public void update(Book entity) {
+    public Book updateEntity(Book entity) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmnt = conn.prepareStatement(
                      String.format("UPDATE \"%s\" SET \"%s\" = ? WHERE \"%s\" = ?", TABLE_NAME, BOOK_NAME, BOOK_ID)))
         {
             stmnt.setString(1, entity.getName());
-            stmnt.setString(2, entity.getBookId());
+            stmnt.setString(2, entity.getBook_id());
             stmnt.executeUpdate();
         } catch (SQLException e) {
             logger.error("Can't update entity: " + e.getMessage());
         }
+
+        return entity;
     }
 }

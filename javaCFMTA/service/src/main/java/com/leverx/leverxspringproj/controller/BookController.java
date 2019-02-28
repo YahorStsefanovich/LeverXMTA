@@ -3,6 +3,7 @@ package com.leverx.leverxspringproj.controller;
 import com.leverx.leverxspringproj.model.Book;
 import com.leverx.leverxspringproj.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,19 +25,21 @@ public class BookController {
         return bookService.getBook(id);
     }
 
-    @PostMapping(value="/Book")
-    public void createBook(@RequestBody Book book) {
-        bookService.createBook(book);
+    @PostMapping(value="/Book",
+                consumes = {MediaType.APPLICATION_JSON_VALUE},
+                produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Book createBook(@RequestBody Book book) {
+        return bookService.createBook(book);
     }
 
     @DeleteMapping(value="/Book/{id}")
-    public void deleteBook(@PathVariable String id) {
-        bookService.deleteBook(id);
+    public String deleteBook(@PathVariable String id) {
+        return bookService.deleteBook(id);
     }
 
     @PutMapping(value="/Book")
-    public void updateBook(@RequestBody Book book) {
-        bookService.updateBook(book);
+    public Book updateBook(@RequestBody Book book) {
+        return bookService.updateBook(book);
     }
 
 }

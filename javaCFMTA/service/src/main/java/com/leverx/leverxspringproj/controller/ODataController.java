@@ -16,7 +16,7 @@ public class ODataController {
     private ODataService oDataService;
 
     @GetMapping(value="/odata/{destinationName}")
-    public List<Product> getAllSuppliers(@PathVariable String destinationName) {
-        return 	oDataService.getAllSuppliers(destinationName);
+    public List<Product> getAllProducts(@PathVariable String destinationName) {
+        return 	oDataService.getAllProducts(destinationName);
     }
 }

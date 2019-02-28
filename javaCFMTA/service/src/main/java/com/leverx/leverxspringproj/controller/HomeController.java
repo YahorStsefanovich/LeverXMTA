@@ -1,23 +1,21 @@
 package com.leverx.leverxspringproj.controller;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import com.leverx.leverxspringproj.model.Destination;
-import com.leverx.leverxspringproj.service.CloudService;
-import com.leverx.leverxspringproj.service.SecurityService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.leverx.leverxspringproj.model.Destination;
+import com.leverx.leverxspringproj.service.CloudService;
+import com.leverx.leverxspringproj.service.SecurityService;
 import com.sap.cloud.sdk.cloudplatform.security.AuthToken;
 import com.sap.cloud.sdk.s4hana.connectivity.exception.AccessDeniedException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class HomeController {
@@ -36,7 +34,7 @@ public class HomeController {
 	@Autowired
 	private SecurityService securityService;
 
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@GetMapping(value="/")
 	public String getHome(Model model) {
 		Map<String, JsonElement> vcap = cloudService.getSpaceName();
 		String appName = cloudService.getApplicationName();
@@ -51,7 +49,7 @@ public class HomeController {
 		return "index";
 	}
 
-	@RequestMapping(value="/jwt", method=RequestMethod.GET)
+	@GetMapping(value="/jwt")
 	public String getJWT(Model model) {
 		Optional<AuthToken> token = cloudService.getCurrToken();
 		JsonObject jo = cloudService.getInfo(token);
@@ -63,7 +61,7 @@ public class HomeController {
 		return "jwt";
 	}
 
-	@RequestMapping(value="/scope", method=RequestMethod.GET)
+	@GetMapping(value="/scope")
 	public String checkScope() throws AccessDeniedException {
 		securityService.userHasAuthorization("Display");
 		return "scope";

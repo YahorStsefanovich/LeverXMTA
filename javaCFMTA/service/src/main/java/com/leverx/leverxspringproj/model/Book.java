@@ -2,15 +2,27 @@ package com.leverx.leverxspringproj.model;
 
 public class Book {
 
-    public Book(String bookId, String name, String authorId) {
-        this.bookId = bookId;
+    public Book(String book_id, String name, String author_id) {
+        this.book_id = book_id;
         this.name = name;
-        this.authorId = authorId;
+        this.author_id = author_id;
     }
 
-    private String bookId;
+    public Book(){
+
+    }
+
+    private String book_id;
     private String name;
-    private String authorId;
+    private String author_id;
+
+    public String getBook_id() {
+        return book_id;
+    }
+
+    public void setBook_id(String book_id) {
+        this.book_id = book_id;
+    }
 
     public String getName() {
         return name;
@@ -20,15 +32,11 @@ public class Book {
         this.name = name;
     }
 
-    public String getBookId() {
-        return bookId;
+    public String getAuthor_id() {
+        return author_id;
     }
 
-    public void setBookId(String bookId) {
-        this.bookId = bookId;
-    }
-
-    public String getAuthorId() {
-        return authorId;
+    public void setAuthor_id(String author_id) {
+        this.author_id = author_id;
     }
 }

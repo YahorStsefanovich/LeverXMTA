@@ -7,8 +7,8 @@ public interface IDao<T, K> {
 	
 	Optional<T> getById(K id);
 	List<T> getAll();
-	void save(T entity);
-	void delete(K id);
-	void update(T entity);
+	T createEntity(T entity);
+	K deleteEntity(K id);
+	T updateEntity(T entity);
 	
 }

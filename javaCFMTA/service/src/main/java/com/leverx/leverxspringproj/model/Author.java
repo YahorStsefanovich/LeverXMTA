@@ -4,15 +4,21 @@ import java.util.List;
 
 public class Author {
 
-    public Author(String authorId, String name, List<Book> bookList) {
-        this.authorId = authorId;
+    public Author(String author_id, String name) {
+        this.author_id = author_id;
         this.name = name;
-        this.bookList = bookList;
     }
 
-    private String authorId;
+    private String author_id;
     private String name;
-    private List<Book> bookList;
+
+    public String getAuthor_id() {
+        return author_id;
+    }
+
+    public void setAuthor_id(String author_id) {
+        this.author_id = author_id;
+    }
 
     public String getName() {
         return name;
@@ -20,21 +26,5 @@ public class Author {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Book> getBookList() {
-        return bookList;
-    }
-
-    public void setBookList(List<Book> bookList) {
-        this.bookList = bookList;
-    }
-
-    public String getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(String authorId) {
-        this.authorId = authorId;
     }
 }

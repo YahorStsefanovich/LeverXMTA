@@ -2,6 +2,7 @@ package com.leverx.leverxspringproj.dao;
 
 import com.leverx.leverxspringproj.model.Author;
 import com.leverx.leverxspringproj.intfce.IAuthorDao;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class AuthorDao implements IAuthorDao {
 	private static final String TABLE_NAME = "javaCFMTA::Author";
 	private static final String AUTHOR_ID = "author_id";
 	private static final String AUTHOR_NAME = "name";
+	private static final String sequenceName = "javaCFMTA::author_id";
 
 	@Autowired
 	public AuthorDao(DataSource dataSource) {
@@ -43,8 +45,7 @@ public class AuthorDao implements IAuthorDao {
 			if (result.next()) {
 				Author author = new Author(
 				        id,
-                        result.getString(AUTHOR_NAME),
-                        null
+                        result.getString(AUTHOR_NAME)
                 );
 				entity = Optional.of(author);
 			} else {
@@ -58,19 +59,17 @@ public class AuthorDao implements IAuthorDao {
 	 
 	@Override
 	public List<Author> getAll() {
-
 		 List<Author> authorsList = new ArrayList<>();
 
 		 try (Connection conn = dataSource.getConnection();
 				 PreparedStatement stmnt = conn.prepareStatement(
-				 		String.format("SELECT \"%s\", \"%s\" FROM \"%s\"", AUTHOR_ID, AUTHOR_NAME, TABLE_NAME)))
+				 		String.format("SELECT FROM \"%s\"", TABLE_NAME)))
 		 {
 			 ResultSet result = stmnt.executeQuery();
 			 while (result.next()) {
 				 Author author = new Author(
                          result.getString(AUTHOR_ID),
-                         result.getString(AUTHOR_NAME),
-                         null
+                         result.getString(AUTHOR_NAME)
                  );
 				 authorsList.add(author);
 			 }
@@ -81,20 +80,23 @@ public class AuthorDao implements IAuthorDao {
 	} 
 	 
 	@Override
-	public void save(Author entity) {
+	public Author createEntity(Author entity) {
 		 try (Connection conn = dataSource.getConnection();
 				 PreparedStatement stmnt = conn.prepareStatement(
-				String.format("INSERT INTO \"%s\"(\"%s\") VALUES (?)", TABLE_NAME, AUTHOR_NAME)))
+				String.format("INSERT INTO \"%s\" VALUES (?, ?)", TABLE_NAME)))
 		 {
-			 stmnt.setString(1, entity.getName());
+			 stmnt.setString(1, Sequence.getNextValue(dataSource, sequenceName, logger));
+			 stmnt.setString(2, entity.getName());
 			 stmnt.execute();
 		 } catch (SQLException e) {
-			 logger.error("Can't to add entity: " + e.getMessage());
+			 logger.error("Can't to create entity: " + e.getMessage());
 		 }
+
+		 return entity;
 	} 
 	 
 	@Override
-	public void delete(String id) {
+	public String deleteEntity(String id) {
 		 try (Connection conn = dataSource.getConnection();
 			 	PreparedStatement stmnt = conn.prepareStatement(
 			 			String.format("DELETE FROM \"%s\" WHERE \"%s\" = ?", TABLE_NAME, AUTHOR_ID)))
@@ -104,20 +106,24 @@ public class AuthorDao implements IAuthorDao {
 		 } catch (SQLException e) {
 			 logger.error("Can't delete entity: " + e.getMessage());
 		 }
+
+		 return id;
 	}
 	 
 	@Override
-	public void update(Author entity) {
+	public Author updateEntity(Author entity) {
 		 try(Connection conn = dataSource.getConnection();
 				 PreparedStatement stmnt = conn.prepareStatement(
 				 		String.format("UPDATE \"%s\" SET \"%s\" = ? WHERE \"%s\" = ?", TABLE_NAME, AUTHOR_NAME, AUTHOR_ID)))
 		 {
 			 stmnt.setString(1, entity.getName());
-			 stmnt.setString(2, entity.getAuthorId());
+			 stmnt.setString(2, entity.getAuthor_id());
 			 stmnt.executeUpdate();
 		 } catch (SQLException e) {
 			 logger.error("Can't update entity: " + e.getMessage());
 		 }
+
+		 return entity;
 	}
 	
 }

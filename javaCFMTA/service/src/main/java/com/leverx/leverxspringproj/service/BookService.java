@@ -2,6 +2,7 @@ package com.leverx.leverxspringproj.service;
 
 import com.leverx.leverxspringproj.dao.BookDao;
 import com.leverx.leverxspringproj.model.Book;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,16 +34,16 @@ public class BookService {
         return book;
     }
 
-    public void createBook(Book book) {
-        bookDao.save(book);
+    public Book createBook(Book book) {
+        return bookDao.createEntity(book);
     }
 
-    public void updateBook(Book book) {
-        bookDao.update(book);
+    public Book updateBook(Book book)  {
+        return bookDao.updateEntity(book);
     }
 
-    public void deleteBook(String id) {
-        bookDao.delete(id);
+    public String deleteBook(String id) {
+        return bookDao.deleteEntity(id);
     }
 
 }
