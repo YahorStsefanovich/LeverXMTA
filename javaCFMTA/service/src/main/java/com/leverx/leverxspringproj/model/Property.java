@@ -1,9 +1,8 @@
-package com.leverx.leverxspringproj.domain;
+package com.leverx.leverxspringproj.model;
 
 public class Property {
 	
 	private String name;
-	
 	private String value;
 
 	public String getName() {

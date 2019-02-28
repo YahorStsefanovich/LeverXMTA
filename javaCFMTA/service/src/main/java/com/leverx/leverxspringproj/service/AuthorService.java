@@ -1,7 +1,7 @@
 package com.leverx.leverxspringproj.service;
 
 import com.leverx.leverxspringproj.dao.AuthorDao;
-import com.leverx.leverxspringproj.domain.Author;
+import com.leverx.leverxspringproj.model.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

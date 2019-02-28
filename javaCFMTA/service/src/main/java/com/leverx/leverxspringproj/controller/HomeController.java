@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.leverx.leverxspringproj.domain.Destination;
+import com.leverx.leverxspringproj.model.Destination;
 import com.leverx.leverxspringproj.service.CloudService;
 import com.leverx.leverxspringproj.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;

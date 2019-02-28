@@ -1,4 +1,4 @@
-package com.leverx.leverxspringproj.domain;
+package com.leverx.leverxspringproj.model;
 
 import java.util.List;
 

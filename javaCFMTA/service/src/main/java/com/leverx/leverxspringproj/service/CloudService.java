@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.leverx.leverxspringproj.domain.Destination;
-import com.leverx.leverxspringproj.domain.Property;
+import com.leverx.leverxspringproj.model.Destination;
+import com.leverx.leverxspringproj.model.Property;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +50,7 @@ public class CloudService {
 	public Optional<AuthToken> getCurrToken() {
 		return authtoken.getCurrentToken();
 	}
+
 	public JsonObject getInfo(Optional<AuthToken> token) {
 		String[] split_string = token.get().getJwt().getToken().split("\\.");
 		String base64EncodedBody = split_string[1];

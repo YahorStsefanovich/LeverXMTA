@@ -1,7 +1,7 @@
 package com.leverx.leverxspringproj.service;
 
 import com.leverx.leverxspringproj.dao.BookDao;
-import com.leverx.leverxspringproj.domain.Book;
+import com.leverx.leverxspringproj.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

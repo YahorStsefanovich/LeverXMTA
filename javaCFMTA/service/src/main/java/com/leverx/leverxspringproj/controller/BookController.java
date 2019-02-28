@@ -1,6 +1,6 @@
 package com.leverx.leverxspringproj.controller;
 
-import com.leverx.leverxspringproj.domain.Book;
+import com.leverx.leverxspringproj.model.Book;
 import com.leverx.leverxspringproj.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

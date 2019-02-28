@@ -1,8 +1,15 @@
-package com.leverx.leverxspringproj.domain;
+package com.leverx.leverxspringproj.model;
 
 import java.util.List;
 
 public class Author {
+
+    public Author(String authorId, String name, List<Book> bookList) {
+        this.authorId = authorId;
+        this.name = name;
+        this.bookList = bookList;
+    }
+
     private String authorId;
     private String name;
     private List<Book> bookList;

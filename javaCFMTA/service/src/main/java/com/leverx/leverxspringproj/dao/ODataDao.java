@@ -1,45 +1,91 @@
 package com.leverx.leverxspringproj.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import com.leverx.leverxspringproj.domain.OData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
-
+import com.leverx.leverxspringproj.intfce.IOdataDao;
+import com.leverx.leverxspringproj.model.Category;
+import com.leverx.leverxspringproj.model.Product;
 import com.sap.cloud.sdk.odatav2.connectivity.ODataException;
 import com.sap.cloud.sdk.odatav2.connectivity.ODataQueryBuilder;
 import com.sap.cloud.sdk.odatav2.connectivity.ODataQueryResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.math.BigDecimal;
+import java.util.*;
 
 @Repository
-public class ODataDao {
+public class ODataDao implements IOdataDao {
+
     private static final Logger logger = LoggerFactory.getLogger(ODataDao.class);
     private final String SERVICE_PATH = "/V2/OData/OData.svc/";
     private final String SERVICE_ENTITY = "Products";
 
-    public List<OData> getAll(String destinationName) {
-        List<OData> UserList = new ArrayList<>();
+    public List<Product> getAll(String destinationName) {
+        List<Product> productList = new ArrayList<>();
+
         try {
-            ODataQueryResult result = ODataQueryBuilder.withEntity(SERVICE_PATH , SERVICE_ENTITY).select("ID", "Name").build().execute(destinationName);
+            ODataQueryResult result = ODataQueryBuilder.withEntity(SERVICE_PATH , SERVICE_ENTITY)
+                    .select("ID", "Name", "Description", "ReleaseDate", "Price", "Category").expand("Category")
+                    .build()
+                    .execute(destinationName);
             List<Map<String, Object>> listMap = result.asListOfMaps();
-            logger.error("ODATA: " + getODataList(listMap));
+            logger.debug("OData: " + getODataList(listMap));
             return  getODataList(listMap);
         } catch (ODataException e) {
-            logger.error("Error while trying to get list of entities: " + e.getMessage());
+            logger.error("Can't get list of entities: " + e.getMessage());
         }
-        return UserList;
+
+        return productList;
     }
 
-    private List<OData> getODataList(List<Map<String, Object>> listMap){
-        List<OData> suppliersList = new ArrayList<>();
+    private List<Product> getODataList(List<Map<String, Object>> listMap){
+        List<Product> productList = new ArrayList<>();
+
         listMap.forEach(item -> {
-            OData supplier = new OData();
-            supplier.setId(Integer.parseInt(item.get("ID").toString()));
-            supplier.setName(item.get("Name").toString());
-            suppliersList.add(supplier);
+            Product product = new Product(
+                    (int)(item.get("ID")),
+                    (String)item.get("Name"),
+                    (String)item.get("Description"),
+                    (GregorianCalendar)item.get("ReleaseDate"),
+                    (BigDecimal)item.get("Price")
+            );
+            product.setCategory(getCategory((Map<String, Object>)item.get("Category")));
+            productList.add(product);
         });
-        return suppliersList;
+
+        return productList;
+    }
+
+    private Category getCategory(Map<String, Object> item){
+
+        return new Category(
+                (int)item.get("ID"),
+                (String) item.get("Name")
+        );
+    }
+
+    public List<Product> getAll(){
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Optional<Product> getById(String id){
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void save(Product entity){
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void delete(String key){
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void update(Product entity) {
+        throw new NotImplementedException();
     }
 }

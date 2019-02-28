@@ -1,6 +1,6 @@
 package com.leverx.leverxspringproj.dao;
 
-import com.leverx.leverxspringproj.domain.Author;
+import com.leverx.leverxspringproj.model.Author;
 import com.leverx.leverxspringproj.intfce.IAuthorDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,9 @@ public class AuthorDao implements IAuthorDao {
 	private static final Logger logger = LoggerFactory.getLogger(AuthorDao.class);
 
 	private final DataSource dataSource;
-
+	private static final String TABLE_NAME = "javaCFMTA::Author";
+	private static final String AUTHOR_ID = "author_id";
+	private static final String AUTHOR_NAME = "name";
 
 	@Autowired
 	public AuthorDao(DataSource dataSource) {
@@ -30,24 +32,26 @@ public class AuthorDao implements IAuthorDao {
 
 	@Override  
 	public Optional<Author> getById(String id) {
-		Optional<Author> entity = Optional.<Author>empty();
+		Optional<Author> entity = Optional.empty();
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmnt = conn.prepareStatement(
-				"SELECT TOP 1 \"author_id\", \"name\" FROM \"javaCFMTA::Author\" WHERE \"author_id\" = ?"))
+				String.format("SELECT TOP 1 * FROM \"%s\" WHERE \"%s\" = ?", TABLE_NAME, AUTHOR_ID)))
 		{
 			stmnt.setString(1, id);
 			ResultSet result = stmnt.executeQuery();
 
 			if (result.next()) {
-				Author author = new Author();
-				author.setAuthorId(id);
-				author.setName(result.getString("name"));
+				Author author = new Author(
+				        id,
+                        result.getString(AUTHOR_NAME),
+                        null
+                );
 				entity = Optional.of(author);
 			} else {
 				entity = Optional.empty();
 			}
 		} catch (SQLException e) {
-			logger.error("Error while trying to get entity by Id: " + e.getMessage());
+			logger.error("Can't get entity by Id: " + e.getMessage());
 		}
 		return entity;  
 	} 
@@ -59,17 +63,19 @@ public class AuthorDao implements IAuthorDao {
 
 		 try (Connection conn = dataSource.getConnection();
 				 PreparedStatement stmnt = conn.prepareStatement(
-				 		"SELECT \"author_id\", \"name\" FROM \"javaCFMTA::Author\""))
+				 		String.format("SELECT \"%s\", \"%s\" FROM \"%s\"", AUTHOR_ID, AUTHOR_NAME, TABLE_NAME)))
 		 {
 			 ResultSet result = stmnt.executeQuery();
 			 while (result.next()) {
-				 Author author = new Author();
-				 author.setAuthorId(result.getString("author_id"));
-				 author.setName(result.getString("name"));
+				 Author author = new Author(
+                         result.getString(AUTHOR_ID),
+                         result.getString(AUTHOR_NAME),
+                         null
+                 );
 				 authorsList.add(author);
 			 }
 		 } catch (SQLException e) {
-			 logger.error("Error while trying to get list of entities: " + e.getMessage());
+			 logger.error("Can't get list of entities: " + e.getMessage());
 		 }
 		 return authorsList;
 	} 
@@ -78,12 +84,12 @@ public class AuthorDao implements IAuthorDao {
 	public void save(Author entity) {
 		 try (Connection conn = dataSource.getConnection();
 				 PreparedStatement stmnt = conn.prepareStatement(
-				"INSERT INTO \"javaCFMTA::Author\"(\"name\") VALUES (?)"))
+				String.format("INSERT INTO \"%s\"(\"%s\") VALUES (?)", TABLE_NAME, AUTHOR_NAME)))
 		 {
 			 stmnt.setString(1, entity.getName());
 			 stmnt.execute();
 		 } catch (SQLException e) {
-			 logger.error("Error while trying to add entity: " + e.getMessage());
+			 logger.error("Can't to add entity: " + e.getMessage());
 		 }
 	} 
 	 
@@ -91,25 +97,26 @@ public class AuthorDao implements IAuthorDao {
 	public void delete(String id) {
 		 try (Connection conn = dataSource.getConnection();
 			 	PreparedStatement stmnt = conn.prepareStatement(
-			 			"DELETE FROM \"javaCFMTA::Author\" WHERE \"author_id\" = ?"))
+			 			String.format("DELETE FROM \"%s\" WHERE \"%s\" = ?", TABLE_NAME, AUTHOR_ID)))
 		 {
 			 stmnt.setString(1, id);
 			 stmnt.execute();
 		 } catch (SQLException e) {
-			 logger.error("Error while trying to delete entity: " + e.getMessage());
+			 logger.error("Can't delete entity: " + e.getMessage());
 		 }
 	}
 	 
 	@Override
 	public void update(Author entity) {
 		 try(Connection conn = dataSource.getConnection();
-				 PreparedStatement stmnt = conn.prepareStatement("UPDATE \"javaCFMTA::Author\" SET \"name\" = ? WHERE \"author_id\" = ?"))
+				 PreparedStatement stmnt = conn.prepareStatement(
+				 		String.format("UPDATE \"%s\" SET \"%s\" = ? WHERE \"%s\" = ?", TABLE_NAME, AUTHOR_NAME, AUTHOR_ID)))
 		 {
 			 stmnt.setString(1, entity.getName());
 			 stmnt.setString(2, entity.getAuthorId());
 			 stmnt.executeUpdate();
 		 } catch (SQLException e) {
-			 logger.error("Error while trying to update entity: " + e.getMessage());
+			 logger.error("Can't update entity: " + e.getMessage());
 		 }
 	}
 	

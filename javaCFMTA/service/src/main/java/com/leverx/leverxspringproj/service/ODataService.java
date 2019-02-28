@@ -1,7 +1,7 @@
 package com.leverx.leverxspringproj.service;
 
 import com.leverx.leverxspringproj.dao.ODataDao;
-import com.leverx.leverxspringproj.domain.OData;
+import com.leverx.leverxspringproj.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class ODataService {
     @Autowired
     private ODataDao odataDao;
 
-    public List<OData> getAllSuppliers(String destinationName){
+    public List<Product> getAllSuppliers(String destinationName){
         return odataDao.getAll(destinationName);
     }
 

@@ -1,6 +1,12 @@
-package com.leverx.leverxspringproj.domain;
+package com.leverx.leverxspringproj.model;
 
 public class Book {
+
+    public Book(String bookId, String name, String authorId) {
+        this.bookId = bookId;
+        this.name = name;
+        this.authorId = authorId;
+    }
 
     private String bookId;
     private String name;
