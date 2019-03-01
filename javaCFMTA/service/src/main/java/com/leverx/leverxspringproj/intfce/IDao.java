@@ -9,6 +9,6 @@ public interface IDao<T, K> {
 	List<T> getAll();
 	T createEntity(T entity);
 	K deleteEntity(K id);
-	T updateEntity(T entity);
+	T updateEntity(T entity, K id);
 	
 }

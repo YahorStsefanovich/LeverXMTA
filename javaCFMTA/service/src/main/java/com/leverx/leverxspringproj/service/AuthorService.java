@@ -37,8 +37,8 @@ public class AuthorService {
 		return authorDao.createEntity(author);
 	}
 	
-	public Author updateAuthor(Author author) {
-		return authorDao.updateEntity(author);
+	public Author updateAuthor(Author author, String id) {
+		return authorDao.updateEntity(author, id);
 	}
 	
 	public String deleteAuthor(String id) {

@@ -112,13 +112,13 @@ public class AuthorDao implements IAuthorDao {
 	}
 	 
 	@Override
-	public Author updateEntity(Author entity) {
+	public Author updateEntity(Author entity, String id) {
 		 try(Connection conn = dataSource.getConnection();
 				 PreparedStatement stmnt = conn.prepareStatement(
 				 		String.format("UPDATE \"%s\" SET \"%s\" = ? WHERE \"%s\" = ?", TABLE_NAME, AUTHOR_NAME, AUTHOR_ID)))
 		 {
 			 stmnt.setString(1, entity.getName());
-			 stmnt.setString(2, entity.getAuthor_id());
+			 stmnt.setString(2, id);
 			 stmnt.executeUpdate();
 		 } catch (SQLException e) {
 			 logger.error("Can't update entity: " + e.getMessage());

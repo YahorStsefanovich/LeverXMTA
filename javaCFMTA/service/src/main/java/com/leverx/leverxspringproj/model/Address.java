@@ -1,49 +1,25 @@
 package com.leverx.leverxspringproj.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import lombok.Data;
+
+@Entity
+@Data
 public class Address {
 
-    private int addressId;
+    @Id @GeneratedValue
+    private String author_id;
     private String city;
-    private String homeNumber;
+    private String hhnm;
+    private String strt;
 
-    public Address(int addressId, String city, String homeNumber, String streetName) {
-        this.addressId = addressId;
+    public Address(String author_id, String city, String homeNumber, String streetName) {
+        this.author_id = author_id;
         this.city = city;
-        this.homeNumber = homeNumber;
-        this.streetName = streetName;
-    }
-
-    private String streetName;
-
-    public int getAddress_id() {
-        return addressId;
-    }
-
-    public void setAddress_id(int addressId) {
-        this.addressId = addressId;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getHomeNumber() {
-        return homeNumber;
-    }
-
-    public void setHomeNumber(String homeNumber) {
-        this.homeNumber = homeNumber;
-    }
-
-    public String getStreetName() {
-        return streetName;
-    }
-
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
+        this.hhnm = homeNumber;
+        this.strt = streetName;
     }
 }

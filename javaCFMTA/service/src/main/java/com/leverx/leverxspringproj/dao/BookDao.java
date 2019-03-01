@@ -115,13 +115,13 @@ public class BookDao implements IBookDao {
     }
 
     @Override
-    public Book updateEntity(Book entity) {
+    public Book updateEntity(Book entity, String id) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmnt = conn.prepareStatement(
                      String.format("UPDATE \"%s\" SET \"%s\" = ? WHERE \"%s\" = ?", TABLE_NAME, BOOK_NAME, BOOK_ID)))
         {
             stmnt.setString(1, entity.getName());
-            stmnt.setString(2, entity.getBook_id());
+            stmnt.setString(2, id);
             stmnt.executeUpdate();
         } catch (SQLException e) {
             logger.error("Can't update entity: " + e.getMessage());

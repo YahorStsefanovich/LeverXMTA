@@ -87,7 +87,7 @@ public class ODataDao implements IOdataDao {
     }
 
     @Override
-    public Product updateEntity(Product entity) {
+    public Product updateEntity(Product entity, String id) {
         throw new NotImplementedException();
     }
 }

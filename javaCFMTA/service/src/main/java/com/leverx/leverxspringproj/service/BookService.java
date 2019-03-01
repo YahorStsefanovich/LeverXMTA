@@ -38,8 +38,8 @@ public class BookService {
         return bookDao.createEntity(book);
     }
 
-    public Book updateBook(Book book)  {
-        return bookDao.updateEntity(book);
+    public Book updateBook(Book book, String id)  {
+        return bookDao.updateEntity(book, id);
     }
 
     public String deleteBook(String id) {
