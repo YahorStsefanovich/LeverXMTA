@@ -62,8 +62,7 @@ public class AuthorDao implements IAuthorDao {
 		 List<Author> authorsList = new ArrayList<>();
 
 		 try (Connection conn = dataSource.getConnection();
-				 PreparedStatement stmnt = conn.prepareStatement(
-				 		String.format("SELECT FROM \"%s\"", TABLE_NAME)))
+				 PreparedStatement stmnt = conn.prepareStatement(String.format("SELECT * FROM \"%s\"", TABLE_NAME)))
 		 {
 			 ResultSet result = stmnt.executeQuery();
 			 while (result.next()) {
@@ -81,11 +80,13 @@ public class AuthorDao implements IAuthorDao {
 	 
 	@Override
 	public Author createEntity(Author entity) {
+		 entity.setAuthor_id(Sequence.getNextValue(dataSource, sequenceName, logger));
+
 		 try (Connection conn = dataSource.getConnection();
 				 PreparedStatement stmnt = conn.prepareStatement(
-				String.format("INSERT INTO \"%s\" VALUES (?, ?)", TABLE_NAME)))
+				String.format("INSERT INTO \"%s\"(\"author_id\", \"name\") VALUES (?, ?)", TABLE_NAME)))
 		 {
-			 stmnt.setString(1, Sequence.getNextValue(dataSource, sequenceName, logger));
+			 stmnt.setString(1, entity.getAuthor_id());
 			 stmnt.setString(2, entity.getName());
 			 stmnt.execute();
 		 } catch (SQLException e) {
