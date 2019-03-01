@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.util.GregorianCalendar;
 
-@Entity
 @Data
 public class Product {
 
