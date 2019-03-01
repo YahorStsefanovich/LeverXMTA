@@ -1,9 +1,13 @@
 package com.leverx.leverxspringproj.model;
 
+import lombok.Data;
+
+import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.util.GregorianCalendar;
-import java.util.List;
 
+@Entity
+@Data
 public class Product {
 
     public Product(int id, String name, String description, GregorianCalendar releaseDate, BigDecimal price) {
@@ -20,52 +24,4 @@ public class Product {
     private GregorianCalendar releaseDate;
     private BigDecimal price;
     private Category category;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public GregorianCalendar getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(GregorianCalendar releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 }
