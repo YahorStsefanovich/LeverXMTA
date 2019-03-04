@@ -2,14 +2,9 @@ package com.leverx.leverxspringproj.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 @Data
 public class Book {
 
-    @Id @GeneratedValue
     private String book_id;
     private String name;
     private String author_id;

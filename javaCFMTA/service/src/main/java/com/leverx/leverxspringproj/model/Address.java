@@ -1,15 +1,10 @@
 package com.leverx.leverxspringproj.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 import lombok.Data;
 
 @Data
 public class Address {
 
-    @Id @GeneratedValue
     private String author_id;
     private String city;
     private String hhnm;

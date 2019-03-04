@@ -2,8 +2,6 @@ package com.leverx.leverxspringproj.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-
 @Data
 public class Category {
     private int id;
