@@ -2,10 +2,12 @@ package com.leverx.leverxspringproj.service;
 
 import com.leverx.leverxspringproj.dao.AuthorDao;
 import com.leverx.leverxspringproj.model.Author;
+import com.leverx.leverxspringproj.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -43,6 +45,10 @@ public class AuthorService {
 	
 	public String deleteAuthor(String id) {
 		return authorDao.deleteEntity(id);
+	}
+
+	public Map<Author, List<Book>> getAuthorBooks(String id){
+		return authorDao.getRelativeEntity(id);
 	}
 	
 }

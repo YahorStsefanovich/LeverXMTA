@@ -2,6 +2,7 @@ package com.leverx.leverxspringproj.dao;
 
 import com.leverx.leverxspringproj.intfce.IAuthorDao;
 import com.leverx.leverxspringproj.model.Author;
+import com.leverx.leverxspringproj.model.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class AuthorDao implements IAuthorDao {
@@ -25,6 +24,7 @@ public class AuthorDao implements IAuthorDao {
 	private static final String AUTHOR_ID = "author_id";
 	private static final String AUTHOR_NAME = "name";
 	private static final String sequenceName = "javaCFMTA::author_id";
+	private static final String RELATIVE_TABLE_NAME = "ExtraInfo.Book";
 
 	@Autowired
 	public AuthorDao(DataSource dataSource) {
@@ -124,6 +124,42 @@ public class AuthorDao implements IAuthorDao {
 		 }
 
 		 return entity;
+	}
+
+	@Override
+	public Map<Author, List<Book>> getRelativeEntity(String id){
+		Map<Author, List<Book>> map = new HashMap<>();
+		try (Connection connection = dataSource.getConnection();
+			 PreparedStatement stmnt = connection.prepareStatement(
+					 "SELECT \"A\".\"name\" as \"a_name\", \"B\".\"name\" as \"b_name\", \"B\".\"author_id\", \"book_id\" FROM \"javaCFMTA::Author\" AS \"A\" INNER JOIN \"javaCFMTA::ExtraInfo.Book\" AS \"B\" ON \"A\".\"author_id\"=\"B\".\"author_id\" WHERE \"A\".\"author_id\"=?"))
+		{
+			stmnt.setString(1, id);
+			ResultSet result = stmnt.executeQuery();
+			List<Book> books = new ArrayList<>();
+			Author author = null;
+			while (result.next()) {
+				if (author == null){
+					author = new Author(
+								result.getString("author_id"),
+								result.getString("a_name")
+					);
+				}
+
+				Book book = new Book(
+								result.getString("book_id"),
+								result.getString("b_name"),
+								result.getString("author_id")
+				);
+				books.add(book);
+			}
+
+			map.put(author, books);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.error("Can't join tables: " + e.getMessage());
+		}
+
+		return map;
 	}
 	
 }

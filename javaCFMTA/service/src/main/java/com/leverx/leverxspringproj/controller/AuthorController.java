@@ -26,7 +26,12 @@ public class AuthorController {
 	public ResponseEntity<?> getAuthor(@PathVariable String id) {
 		return new ResponseEntity<>(authorService.getAuthor(id), new HttpHeaders(), HttpStatus.OK);
 	}
-	
+
+	@GetMapping(value="/AuthorBooks/{id}")
+	public ResponseEntity<?> getAuthorBooks(@PathVariable String id) {
+		return new ResponseEntity<>(authorService.getAuthorBooks(id), new HttpHeaders(), HttpStatus.OK);
+	}
+
 	@PostMapping(value="/Author")
 	public ResponseEntity<?> createAuthor(@RequestBody Author author) {
 		return  ResponseEntity.created(null).body(authorService.createAuthor(author)) ;
